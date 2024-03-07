@@ -1,0 +1,5 @@
+C:\Users\qdo20\Source\Repos\Contra\ContraNES\x64\Debug\D3DCompiler_43.dll
+C:\Users\qdo20\Source\Repos\Contra\ContraNES\x64\Debug\d3dx9d_43.dll
+C:\Users\qdo20\Source\Repos\Contra\ContraNES\x64\Debug\d3dx10d_43.dll
+C:\Users\qdo20\Source\Repos\Contra\ContraNES\x64\Debug\d3dx11d_43.dll
+C:\Users\qdo20\source\repos\Contra\ContraNES\ContraNES\x64\Debug\ContraNES.vcxproj.Up2Date

@@ -1,5 +1,4 @@
 ﻿#include "Game.h"
-#include <comdef.h>
 
 #define MAX_FRAME_RATE 30;
 #define TEXTURE_PATH_BRICK L"ContraMapStage1BG.jpg"
@@ -19,7 +18,6 @@ void Game::Initialize(HWND hWnd, HINSTANCE hInstance)
 
 	BackBufferWidth = r.right + 1;
 	BackBufferHeight = r.bottom + 1;
-
 
 	// Create & clear the DXGI_SWAP_CHAIN_DESC structure
 	DXGI_SWAP_CHAIN_DESC swapChainDesc;
@@ -119,7 +117,16 @@ void Game::Initialize(HWND hWnd, HINSTANCE hInstance)
 
 	DebugOut((wchar_t*)L"[INFO] InitDirectX has been successful\n");
 
+	keyboard = new Keyboard();
+	KeyEventHandler* keyHandler = new CSampleKeyHandler();
+	keyboard->InitKeyboard(hInstance, hWnd, keyHandler);
 	return;
+}
+
+
+void Game::Update(DWORD dt)
+{
+	keyboard->ProcessKeyboard();
 }
 
 void Game::Render()

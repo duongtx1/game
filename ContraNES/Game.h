@@ -6,21 +6,22 @@
 #include "Texture.h"
 #include "GameObject.h"
 #include "Keyboard.h"
+#include "Player.h"
 
 #define MAX_FRAME_RATE 60
 #define BACKGROUND_COLOR D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.0f)
 
 
-#define MARIO_START_X 10.0f
-#define MARIO_START_Y 100.0f
-#define MARIO_START_VX 0.1f
-#define MARIO_START_VY 0.1f
+#define CONTRA_START_X 10.0f
+#define CONTRA_START_Y 100.0f
+#define CONTRA_START_VX 0.1f
+#define CONTRA_START_VY 0.1f
 
 #define BRICK_X 10.0f
 #define BRICK_Y 120.0f
 
 #define TEXTURE_PATH_BRICK L"brick.png"
-#define TEXTURE_PATH_MARIO L"LanceStandingL.png"
+#define TEXTURE_PATH_CONTRA L"LanceStandingL.png"
 
 #define TEXTURE_PATH_MISC L"misc.png"
 /*
@@ -45,11 +46,9 @@ class CGame
 
 	Keyboard* keyboard;
 
-	CMario* mario;
+	CPlayer* player;
 
-	CBrick* brick;
-
-	LPTEXTURE texMario = NULL;
+	LPTEXTURE texPlayer = NULL;
 	LPTEXTURE texBrick = NULL;
 	LPTEXTURE texMisc = NULL;
 public:

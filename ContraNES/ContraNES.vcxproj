@@ -134,6 +134,7 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="KeyEventHandler.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +146,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="KeyEventHandler.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>

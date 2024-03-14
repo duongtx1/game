@@ -4,7 +4,6 @@
 #include <d3dx10.h>
 
 #include "Texture.h"
-#include "KeyEventHandler.h"
 
 class CGameObject
 {
@@ -28,27 +27,3 @@ public:
 	~CGameObject();
 };
 typedef CGameObject* LPGAMEOBJECT;
-
-class CBrick : public CGameObject
-{
-public:
-	CBrick(float x, float y, LPTEXTURE texture) : CGameObject(x, y, texture) {}
-	void Update(DWORD dt) {};
-};
-
-class CMario : public CGameObject, public KeyEventHandler
-{
-	float vx;
-	float vy;
-public:
-	CMario(float x, float y, float vx, float vy, LPTEXTURE texture) :CGameObject(x, y, texture)
-	{
-		this->vx = vx;
-		this->vy = vy;
-	};
-	void Update(DWORD dt);
-
-	void KeyState(BYTE* state);
-	void OnKeyDown(int KeyCode);
-	void OnKeyUp(int KeyCode);
-};

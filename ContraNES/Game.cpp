@@ -274,12 +274,11 @@ CGame* CGame::GetInstance()
 void CGame::LoadResources()
 {
 	texBrick = LoadTexture(TEXTURE_PATH_BRICK);
-	texMario = LoadTexture(TEXTURE_PATH_MARIO);
+	texPlayer = LoadTexture(TEXTURE_PATH_CONTRA);
 	texMisc = LoadTexture(TEXTURE_PATH_MISC);
 
-	mario = new CMario(MARIO_START_X, MARIO_START_Y, MARIO_START_VX, MARIO_START_VY, texMario);
-	Keyboard::GetInstance()->SetKeyEventHandler(mario);
-	brick = new CBrick(BRICK_X, BRICK_Y, texBrick);
+	player = new CPlayer(CONTRA_START_X, CONTRA_START_Y, CONTRA_START_VX, CONTRA_START_VY, texPlayer);
+	Keyboard::GetInstance()->SetKeyEventHandler(player);
 }
 
 /*
@@ -290,8 +289,7 @@ void CGame::Update(DWORD dt)
 {
 	Keyboard::GetInstance()->ProcessKeyboard();
 
-	mario->Update(dt);
-	brick->Update(dt);
+	player->Update(dt);
 }
 
 /*
@@ -315,8 +313,7 @@ void CGame::Render()
 		FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 		pD3DDevice->OMSetBlendState(GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
-		brick->Render();
-		mario->Render();
+		player->Render();
 
 		spriteHandler->End();
 		pSwapChain->Present(0, 0);

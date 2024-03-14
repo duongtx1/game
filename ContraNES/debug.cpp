@@ -1,6 +1,5 @@
 #include <Windows.h>
 #include "debug.h"
-#include <string>
 
 HWND _hwnd = NULL;
 

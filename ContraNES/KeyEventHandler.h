@@ -6,6 +6,7 @@
 */
 class KeyEventHandler
 {
+protected:
 	BYTE* keyStates;									// DirectInput keyboard state buffer 
 public:
 	virtual void KeyState(BYTE* state) {}
@@ -18,10 +19,4 @@ public:
 	}
 };
 
-
-class CSampleKeyHandler : public KeyEventHandler
-{
-	virtual void KeyState(BYTE* states) {};
-	virtual void OnKeyDown(int KeyCode){};
-	virtual void OnKeyUp(int KeyCode){};
-};
+typedef KeyEventHandler* LPKEYEVENTHANDLER;

@@ -1,25 +1,21 @@
 ﻿#include <windows.h>
-
 #include <d3d10.h>
 #include <d3dx10.h>
+#include <vector>
 
-#include <signal.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <time.h>
-#include <stdlib.h>
-
-#include <comdef.h>
 #include "debug.h"
 #include "Game.h"
 
-#define WINDOW_CLASS_NAME L"SampleWindow"
-#define WINDOW_TITLE L"00 - Intro"
-#define WINDOW_ICON_PATH L"brick.ico" 
+#define WINDOW_CLASS_NAME L"Game Window"
+#define MAIN_WINDOW_TITLE L"01 - Skeleton"
+#define WINDOW_ICON_PATH L"brick.ico"
 
-#define WINDOW_WIDTH 640
-#define WINDOW_HEIGHT 480
+
+#define SCREEN_WIDTH 320
+#define SCREEN_HEIGHT 240
+
+
+using namespace std;
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -33,7 +29,6 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	return 0;
 }
-
 
 HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
 {
@@ -58,7 +53,7 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 	HWND hWnd =
 		CreateWindow(
 			WINDOW_CLASS_NAME,
-			WINDOW_TITLE,
+			MAIN_WINDOW_TITLE,
 			WS_OVERLAPPEDWINDOW, // WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
 			CW_USEDEFAULT,
 			CW_USEDEFAULT,
@@ -72,7 +67,7 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 	if (!hWnd)
 	{
 		DWORD ErrCode = GetLastError();
-		DebugOut((wchar_t*)L"[ERROR] CreateWindow failed! ErrCode: %d\nAt: %s %d \n", ErrCode, _W(__FILE__), __LINE__);
+		DebugOut(L"[ERROR] CreateWindow failed! ErrCode: %d\nAt: %s %d \n", ErrCode, _W(__FILE__), __LINE__);
 		return 0;
 	}
 
@@ -85,32 +80,6 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 }
 
 
-void Cleanup()
-{
-	//// release the rendertarget
-	//if (pRenderTargetView)
-	//{
-	//	pRenderTargetView->Release();
-	//}
-	//// release the swapchain
-	//if (pSwapChain)
-	//{
-	//	pSwapChain->Release();
-	//}
-	//// release the D3D Device
-	//if (pD3DDevice)
-	//{
-	//	pD3DDevice->Release();
-	//}
-
-	//if (spriteObject)
-	//{
-	//	spriteObject->Release();
-	//	spriteObject = NULL;
-	//}
-
-	DebugOut((wchar_t*)L"[INFO] Cleanup Ok\n");
-}
 
 int WINAPI WinMain(
 	_In_ HINSTANCE hInstance,
@@ -119,14 +88,13 @@ int WINAPI WinMain(
 	_In_ int nCmdShow
 )
 {
-	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, WINDOW_WIDTH, WINDOW_HEIGHT);
+	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	Game* game = Game::GetInstance();
-	game->Initialize(hWnd, hInstance);
-	game->LoadResources();
+	CGame* game = CGame::GetInstance();
+	game->Init(hWnd, hInstance);
+
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	game->Run();
-
-	Cleanup();
 
 	return 0;
 }

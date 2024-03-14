@@ -3,8 +3,7 @@
 	Debug utilities
 */
 
-
-//#include <windows.h>
+#include <windows.h>
 #include <signal.h>
 #include <string.h>
 #include <stdio.h>

@@ -1,31 +1,38 @@
 #include "Keyboard.h"
-#include "debug.h"
 
-void Keyboard::InitKeyboard(HINSTANCE hInstance, HWND hWnd, KeyEventHandler* handler)
+Keyboard* Keyboard::__instance = NULL;
+
+Keyboard* Keyboard::GetInstance() {
+	if (__instance == NULL) __instance = new Keyboard();
+	return __instance;
+}
+
+
+void Keyboard::InitKeyboard(HINSTANCE hInstance, HWND hWnd)
 {
 	// Keyboard
-	HRESULT hr2 = DirectInput8Create(
+	HRESULT hr = DirectInput8Create(
 		hInstance,
 		DIRECTINPUT_VERSION,
 		IID_IDirectInput8, (VOID**)&di, NULL
 	);
-	if (hr2 != DI_OK)
+	if (hr != DI_OK)
 	{
 		DebugOut(L"[ERROR] DirectInput8Create failed!\n");
 		return;
 	}
 
-	hr2 = di->CreateDevice(GUID_SysKeyboard, &didv, NULL);
+	hr = di->CreateDevice(GUID_SysKeyboard, &didv, NULL);
 
-	if (hr2 != DI_OK)
+	if (hr != DI_OK)
 	{
 		DebugOut(L"[ERROR] CreateDevice failed!\n");
 		return;
 	}
 
-	hr2 = didv->SetDataFormat(&c_dfDIKeyboard);
+	hr = didv->SetDataFormat(&c_dfDIKeyboard);
 
-	hr2 = didv->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	hr = didv->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 
 	DIPROPDWORD dipdw;
 
@@ -35,18 +42,21 @@ void Keyboard::InitKeyboard(HINSTANCE hInstance, HWND hWnd, KeyEventHandler* han
 	dipdw.diph.dwHow = DIPH_DEVICE;
 	dipdw.dwData = KEYBOARD_BUFFER_SIZE; // Arbitary buffer size
 
-	hr2 = didv->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph);
+	hr = didv->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph);
 
-	hr2 = didv->Acquire();
-	if (hr2 != DI_OK)
+	hr = didv->Acquire();
+	if (hr != DI_OK)
 	{
 		DebugOut(L"[ERROR] DINPUT8::Acquire failed!\n");
 		return;
 	}
 
-	keyHandler = handler;
-
 	DebugOut(L"[INFO] Keyboard has been initialized successfully\n");
+}
+
+void Keyboard::SetKeyEventHandler(LPKEYEVENTHANDLER handler)
+{
+	keyHandler = handler;
 }
 
 void Keyboard::ProcessKeyboard() {
@@ -68,7 +78,7 @@ void Keyboard::ProcessKeyboard() {
 		}
 		else
 		{
-			//DebugOut(L"[ERROR] DINPUT::GetDeviceState failed. Error: %d\n", hr);
+			DebugOut(L"[ERROR] DINPUT::GetDeviceState failed. Error: %d\n", hr);
 			return;
 		}
 	}
@@ -90,7 +100,7 @@ void Keyboard::ProcessKeyboard() {
 		int KeyCode = keyEvents[i].dwOfs;
 		int KeyState = keyEvents[i].dwData;
 		if ((KeyState & 0x80) > 0) {
-			keyHandler->OnKeyDown(KeyCode); 
+			keyHandler->OnKeyDown(KeyCode);
 		}
 		else {
 			keyHandler->OnKeyUp(KeyCode);

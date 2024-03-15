@@ -7,6 +7,8 @@
 #include "GameObject.h"
 #include "Keyboard.h"
 #include "Player.h"
+#include "Keyboard.h"
+#include "debug.h"
 
 #define MAX_FRAME_RATE 60
 #define BACKGROUND_COLOR D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.0f)
@@ -51,6 +53,9 @@ class CGame
 	LPTEXTURE texPlayer = NULL;
 	LPTEXTURE texBrick = NULL;
 	LPTEXTURE texMisc = NULL;
+
+	float cam_x = 0.0f;
+	float cam_y = 0.0f;
 public:
 	// Init DirectX, Sprite Handler
 	void Init(HWND hWnd, HINSTANCE hInstance);
@@ -87,6 +92,8 @@ public:
 	void Update(DWORD dt);
 	void Render();
 	int Run();
+	void SetCamPos(float x, float y) { cam_x = x; cam_y = y; }
+	void GetCamPos(float& x, float& y) { x = cam_x; y = cam_y; }
 
 	~CGame();
 };

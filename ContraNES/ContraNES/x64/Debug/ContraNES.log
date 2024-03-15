@@ -1,13 +1,2 @@
 ﻿  Game.cpp
-  GameObject.cpp
-  main.cpp
-  Player.cpp
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-C:\Users\qdo20\Source\Repos\Contra\ContraNES\Keyboard.h(6,1): warning C4005: 'DIRECTINPUT_VERSION': macro redefinition
-  (compiling source file 'Player.cpp')
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h(48,1):
-  see previous definition of 'DIRECTINPUT_VERSION'
-  
-  Texture.cpp
-  Generating Code...
   ContraNES.vcxproj -> C:\Users\qdo20\Source\Repos\Contra\ContraNES\x64\Debug\ContraNES.exe

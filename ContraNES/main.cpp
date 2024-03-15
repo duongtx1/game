@@ -7,15 +7,12 @@
 #include "Game.h"
 
 #define WINDOW_CLASS_NAME L"Game Window"
-#define MAIN_WINDOW_TITLE L"01 - Skeleton"
+#define MAIN_WINDOW_TITLE L"Contra - NES"
 #define WINDOW_ICON_PATH L"brick.ico"
 
 
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
-
-
-using namespace std;
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {

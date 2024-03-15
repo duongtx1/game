@@ -1,6 +1,4 @@
-﻿#include "debug.h"
-#include "Game.h"
-#include "Keyboard.h"
+﻿#include "Game.h"
 
 CGame* CGame::__instance = NULL;
 
@@ -11,7 +9,7 @@ CGame* CGame::__instance = NULL;
 */
 void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 {
-
+	this->hWnd = hWnd;
 	this->hInstance = hInstance;
 	// retrieve client area width & height so that we can create backbuffer height & width accordingly 
 	RECT r;
@@ -85,6 +83,23 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	viewPort.TopLeftY = 0;
 	pD3DDevice->RSSetViewports(1, &viewPort);
 
+	//
+	D3D10_SAMPLER_DESC desc;
+	desc.Filter = D3D10_FILTER_MIN_MAG_POINT_MIP_LINEAR;
+	desc.AddressU = D3D10_TEXTURE_ADDRESS_CLAMP;
+	desc.AddressV = D3D10_TEXTURE_ADDRESS_CLAMP;
+	desc.AddressW = D3D10_TEXTURE_ADDRESS_CLAMP;
+	desc.MipLODBias = 0;
+	desc.MaxAnisotropy = 1;
+	desc.ComparisonFunc = D3D10_COMPARISON_NEVER;
+	desc.BorderColor[0] = 1.0f;
+	desc.BorderColor[1] = 1.0f;
+	desc.BorderColor[2] = 1.0f;
+	desc.BorderColor[3] = 1.0f;
+	desc.MinLOD = -FLT_MAX;
+	desc.MaxLOD = FLT_MAX;
+
+	//pD3DDevice->CreateSamplerState(&desc, &this->pPointSamplerState);
 
 	// create the sprite object to handle sprite drawing 
 	hr = D3DX10CreateSprite(pD3DDevice, 0, &spriteObject);
@@ -141,8 +156,8 @@ void CGame::Draw(float x, float y, LPTEXTURE tex, RECT* rect)
 {
 	if (tex == NULL) return;
 
-	int spriteWidth = 0;
-	int spriteHeight = 0;
+	int spriteWidth = 24;
+	int spriteHeight = 35;
 
 	D3DX10_SPRITE sprite;
 
@@ -159,16 +174,16 @@ void CGame::Draw(float x, float y, LPTEXTURE tex, RECT* rect)
 		sprite.TexSize.x = 1.0f;
 		sprite.TexSize.y = 1.0f;
 
-		spriteWidth = tex->getWidth();
-		spriteHeight = tex->getHeight();
+		if (spriteWidth == 0) spriteWidth = tex->getWidth();
+		if (spriteHeight == 0) spriteHeight = tex->getHeight();
 	}
 	else
 	{
 		sprite.TexCoord.x = rect->left / (float)tex->getWidth();
 		sprite.TexCoord.y = rect->top / (float)tex->getHeight();
 
-		spriteWidth = (rect->right - rect->left + 1);
-		spriteHeight = (rect->bottom - rect->top + 1);
+		if (spriteWidth == 0) spriteWidth = (rect->right - rect->left + 1);
+		if (spriteHeight == 0) spriteHeight = (rect->bottom - rect->top + 1);
 
 		sprite.TexSize.x = spriteWidth / (float)tex->getWidth();
 		sprite.TexSize.y = spriteHeight / (float)tex->getHeight();
@@ -178,7 +193,9 @@ void CGame::Draw(float x, float y, LPTEXTURE tex, RECT* rect)
 	sprite.TextureIndex = 0;
 
 	// The color to apply to this sprite, full color applies white.
+	//sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
 
 	//
 	// Build the rendering matrix based on sprite location 
@@ -263,7 +280,11 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 
 CGame::~CGame()
 {
-
+	pBlendStateAlpha->Release();
+	spriteObject->Release();
+	pRenderTargetView->Release();
+	pSwapChain->Release();
+	pD3DDevice->Release();
 }
 
 CGame* CGame::GetInstance()
@@ -278,6 +299,7 @@ void CGame::LoadResources()
 	texMisc = LoadTexture(TEXTURE_PATH_MISC);
 
 	player = new CPlayer(CONTRA_START_X, CONTRA_START_Y, CONTRA_START_VX, CONTRA_START_VY, texPlayer);
+
 	Keyboard::GetInstance()->SetKeyEventHandler(player);
 }
 
@@ -290,6 +312,18 @@ void CGame::Update(DWORD dt)
 	Keyboard::GetInstance()->ProcessKeyboard();
 
 	player->Update(dt);
+
+	float cx, cy, cc;
+	player->GetPosition(cx, cy);
+
+	cc = cx;
+	cx -= GetBackBufferWidth() / 2;
+	cy -= GetBackBufferHeight() / 2;
+
+	if (cx < 0) cx = 0;
+
+	SetCamPos(cx, 0.0f /*cy*/);
+	DebugOutTitle(L"%0.2f\t   %0.2f\t", cx, cc);
 }
 
 /*

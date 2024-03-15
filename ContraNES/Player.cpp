@@ -7,21 +7,26 @@
 void CPlayer::Update(DWORD dt)
 {
 	x += vx * dt;
-
+	DebugOut(L"%0.2f\n", x);
 	int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
-	if (x <= 0 || x >= BackBufferWidth - CONTRA_WIDTH) {
+	//if (x <= 0 || x >= BackBufferWidth - CONTRA_WIDTH) {
 
-		vx = -vx;
+		//vx = -vx;
 
-		if (x <= 0)
-		{
-			x = 0;
-		}
-		else if (x >= BackBufferWidth - CONTRA_WIDTH)
-		{
-			x = (float)(BackBufferWidth - CONTRA_WIDTH);
-		}
-	}
+		//if (x <= 0)
+		//{
+			//x = 0;
+		//}
+		//else if (x >= BackBufferWidth - CONTRA_WIDTH)
+		//{
+			//x = (float)(BackBufferWidth - CONTRA_WIDTH);
+		//}
+	//}
+}
+
+void CPlayer::Render()
+{
+	sprite->Draw(x, y);
 }
 
 void CPlayer::KeyState(BYTE* state)

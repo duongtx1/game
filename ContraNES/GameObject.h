@@ -22,7 +22,7 @@ public:
 	CGameObject(float x = 0.0f, float y = 0.0f, LPTEXTURE texture = NULL);
 
 	virtual void Update(DWORD dt) = 0;
-	virtual void Render();
+	virtual void Render() = 0;
 
 	~CGameObject();
 };

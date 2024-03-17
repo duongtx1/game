@@ -11,6 +11,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -42,3 +43,5 @@ void DebugOutTitle(const wchar_t* fmt, ...);
 void SetDebugWindow(HWND hwnd);
 
 LPCWSTR ToLPCWSTR(string st);
+
+vector<string> split(string line, string delimeter = "\t");

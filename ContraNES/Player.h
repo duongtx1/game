@@ -11,7 +11,7 @@ class CPlayer : public CGameObject, public KeyEventHandler
 public:
 	CPlayer(float x, float y, float vx, float vy, LPTEXTURE texture) :CGameObject(x, y, texture)
 	{
-		sprite = new CSprite(1, 0, 0, 25, 34, texture);
+		sprite = new CSprite(0, 0, 25, 34, texture);
 
 		this->vx = vx;
 		this->vy = vy;

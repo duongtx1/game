@@ -13,14 +13,15 @@ using namespace std;
 #include "Texture.h"
 #include "KeyEventHandler.h"
 #include "Player.h"
+#include "Map.h"
 //#include "Scene.h"
 
 #define MAX_FRAME_RATE 100
 #define KEYBOARD_BUFFER_SIZE 1024
 #define KEYBOARD_STATE_SIZE 256
 
-#define CONTRA_START_X 10.0f
-#define CONTRA_START_Y 100.0f
+#define CONTRA_START_X 0.0f
+#define CONTRA_START_Y 0.0f
 #define CONTRA_START_VX 0.1f
 #define CONTRA_START_VY 0.1f
 
@@ -67,6 +68,7 @@ class CGame
 	int current_scene;
 	int next_scene = -1;
 	CPlayer* player;
+	CMap* map;
 
 	LPTEXTURE texPlayer = NULL;
 	vector<LPGAMEOBJECT> objects;
@@ -119,11 +121,15 @@ public:
 	void SetPointSamplerState();
 
 	void SetCamPos(float x, float y) { cam_x = x; cam_y = y; }
-	void GetCamPos(float& x, float& y) { x = cam_x; y = cam_y; }
+	void GetCamPos(float& x, float& y) {
+		x = cam_x; y = cam_y;
+	}
 
 	//LPSCENE GetCurrentScene() { return scenes[current_scene]; }
 	void SwitchScene();
 	void InitiateSwitchScene(int scene_id);
+	CPlayer* GetPlayer() { return player; }
+
 
 	void _ParseSection_TEXTURES(string line);
 	void Update(DWORD dt);

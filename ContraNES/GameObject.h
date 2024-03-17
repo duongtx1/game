@@ -38,7 +38,7 @@ class CBrick : public CGameObject {
 	LPSPRITE sprite;
 public:
 	CBrick(float x, float y, LPTEXTURE tex) : CGameObject(x, y, tex) {
-		sprite = new CSprite(1, 0, 0, 16, 16, texture);
+		sprite = new CSprite(0, 0, 16, 16, texture);
 	}
 	void Render();
 	void Update(DWORD dt) {}

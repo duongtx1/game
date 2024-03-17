@@ -576,11 +576,13 @@ void CGame::Update(DWORD dt) {
 	cy -= game->GetBackBufferHeight() / 2;
 
 	if (cx < 0) cx = 0;
+	if (cy < 0) cy = 0;
 
-	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
-	DebugOutTitle(L"%0.2f\t   %0.2f\t", cx, cc);
+	CGame::GetInstance()->SetCamPos(cx, cy);
+	DebugOutTitle(L"%0.2f\t   %0.2f\t", cx, cy);
 }
 void CGame::Render() {
+	map->Render();
 	player->Render();
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
@@ -588,16 +590,17 @@ void CGame::Render() {
 }
 void CGame::Load(LPCWSTR gameFile) {
 	texPlayer = LoadTexture(TEXTURE_PATH_CONTRA);
-	player = new CPlayer(CONTRA_START_X, CONTRA_START_Y, CONTRA_START_VX, CONTRA_START_VY, texPlayer);
+	player = new CPlayer(0, 200, CONTRA_START_VX, CONTRA_START_VY, texPlayer);
 
 	Keyboard::GetInstance()->SetKeyEventHandler(player);
 	keyHandler = player;
 
+	map = new CMap(L"Map2.data");
 
 	texPlayer = LoadTexture(TEXTURE_PATH_CONTRA);
 	for (int i = 1; i < 40; i++)
 	{
-		CBrick* b = new CBrick(i * BRICK_WIDTH * 1.0f, CONTRA_START_Y - 44, texPlayer);
+		CBrick* b = new CBrick(i * BRICK_WIDTH * 1.0f, 200, texPlayer);
 		objects.push_back(b);
 	}
 }

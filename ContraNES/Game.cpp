@@ -25,7 +25,7 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	RECT r;
 	GetClientRect(hWnd, &r);
 
-	backBufferWidth = r.right + 1;
+	backBufferWidth = r.right;
 	backBufferHeight = r.bottom + 1;
 
 	DebugOut(L"[INFO] Window's client area: width= %d, height= %d\n", r.right - 1, r.bottom - 1);
@@ -576,10 +576,16 @@ void CGame::Update(DWORD dt) {
 	cy -= game->GetBackBufferHeight() / 2;
 
 	if (cx < 0) cx = 0;
+	if (cx > map->getMapWidth() - game->GetBackBufferWidth()) { //3328 305
+		cx = map->getMapWidth() - game->GetBackBufferWidth();
+		//cx = 3008;
+	}
 	if (cy < 0) cy = 0;
+	cy = 10;
+	// TODO: fix this temp solution
 
 	CGame::GetInstance()->SetCamPos(cx, cy);
-	DebugOutTitle(L"%0.2f\t   %0.2f\t", cx, cy);
+	DebugOut(L"%0.2f\t   %0.2f\t\n", cx, cy);
 }
 void CGame::Render() {
 	map->Render();
@@ -590,7 +596,7 @@ void CGame::Render() {
 }
 void CGame::Load(LPCWSTR gameFile) {
 	texPlayer = LoadTexture(TEXTURE_PATH_CONTRA);
-	player = new CPlayer(0, 200, CONTRA_START_VX, CONTRA_START_VY, texPlayer);
+	player = new CPlayer(2500, 200, CONTRA_START_VX, CONTRA_START_VY, texPlayer);
 
 	Keyboard::GetInstance()->SetKeyEventHandler(player);
 	keyHandler = player;

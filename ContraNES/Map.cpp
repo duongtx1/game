@@ -90,8 +90,8 @@ void CMap::_ParseSection_Info(string line)
 	height = row * tileSize;
 	width = column * tileSize;
 
-	offsetW = CGame::GetInstance()->GetBackBufferWidth() / tileSize + EXTRA_TILE;
-	offsetH = CGame::GetInstance()->GetBackBufferHeight() / tileSize + EXTRA_TILE;
+	offsetW = 40;// CGame::GetInstance()->GetBackBufferWidth() / tileSize + EXTRA_TILE;
+	offsetH = 40;// CGame::GetInstance()->GetBackBufferHeight() / tileSize + EXTRA_TILE;
 }
 
 void CMap::LoadMapTiles() {

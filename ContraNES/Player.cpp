@@ -8,9 +8,9 @@
 void CPlayer::Update(DWORD dt)
 {
 	x += vx * dt;
-	DebugOut(L"%0.2f\t\t%0.2f\t\n", x, y);
+	//DebugOut(L"%0.2f\t\t%0.2f\t\n", x, y);
 	int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
-	if (x <= 0 || x >= 1000 - CONTRA_WIDTH) {
+	if (x <= 0 || x >= 4000 - CONTRA_WIDTH) {
 
 		vx = -vx;
 
@@ -46,6 +46,9 @@ void CPlayer::KeyState(BYTE* state)
 	}
 	else if (IsKeyDown(DIK_UP)) {
 		y++;
+	}
+	else if (IsKeyDown(DIK_A)) {
+		Stop();
 	}
 
 }

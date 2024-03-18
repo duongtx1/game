@@ -23,5 +23,7 @@ public:
 	void OnKeyDown(int KeyCode);
 	void OnKeyUp(int KeyCode);
 	void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
-
+	void Stop() {
+		vx = 0;
+	}
 };

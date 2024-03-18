@@ -36,16 +36,15 @@ void CSprite::Draw(float x, float y)
 	float cx, cy;
 	g->GetCamPos(cx, cy);
 
-	D3DXMATRIX matTranslation;
-	float xx, yy;
-	xx = x - cx;
-	yy = y - cy;
+	cx = (FLOAT)floor(cx);
+	cy = (FLOAT)floor(cy);
 
-	int halfheight = (this->bottom - this->top + 1) / 2;
-	int backBufferHeight = g->GetBackBufferHeight();
+	D3DXMATRIX matTranslation;
+
+	x = (FLOAT)floor(x);
+	y = (FLOAT)floor(y);
 
 	D3DXMatrixTranslation(&matTranslation, x - cx, g->GetBackBufferHeight() - y + cy, 0.1f);
-	//D3DXMatrixTranslation(&matTranslation, xx, yy + backBufferHeight - cy, 0.1f);
 	this->sprite.matWorld = (this->matScaling * matTranslation);
 	g->GetSpriteHandler()->DrawSpritesImmediate(&sprite, 1, 0, 0);
 }

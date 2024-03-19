@@ -6,7 +6,7 @@
 
 #define BILL_WIDTH 14
 
-#define BILL_RUN_SPEED 1.0f
+#define BILL_RUN_SPEED 0.1f
 #define BILL_JUMP_SPEED 0.5f
 
 #define BILL_GRAVITY 0.0025f
@@ -42,7 +42,6 @@ public:
 	CPlayer(float x, float y, float vx, float vy, LPTEXTURE texture) :CGameObject(x, y, texture)
 	{
 		sprite = new CSprite(0, 0, 25, 34, texture);
-
 		this->vx = vx;
 		this->vy = vy;
 	};

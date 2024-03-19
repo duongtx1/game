@@ -1,3 +1,33 @@
-﻿  Game.cpp
+﻿  Camera.cpp
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\qdo20\source\repos\Contra\ContraNES\Game.h(12,1): warning C4005: 'DIRECTINPUT_VERSION': macro redefinition
+  (compiling source file 'Camera.cpp')
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h(48,1):
+  see previous definition of 'DIRECTINPUT_VERSION'
+  
+  Game.cpp
 C:\Users\qdo20\source\repos\Contra\ContraNES\Game.cpp(467,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  GameObject.cpp
+  Map.cpp
+  Player.cpp
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+C:\Users\qdo20\source\repos\Contra\ContraNES\Game.h(12,1): warning C4005: 'DIRECTINPUT_VERSION': macro redefinition
+  (compiling source file 'Player.cpp')
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h(48,1):
+  see previous definition of 'DIRECTINPUT_VERSION'
+  
+  Sprite.cpp
+  Sprites.cpp
+  Textures.cpp
+  main.cpp
+C:\Users\qdo20\source\repos\Contra\ContraNES\main.cpp(53,1): warning C4005: 'BACKGROUND_COLOR': macro redefinition
+  C:\Users\qdo20\source\repos\Contra\ContraNES\main.cpp(52,1):
+  see previous definition of 'BACKGROUND_COLOR'
+  
+  Generating Code...
+LINK : warning LNK4020: a type record in '' is corrupted; some symbols and types may not be accessible from the debugger
+LINK : warning LNK4020: a type record in '' is corrupted; some symbols and types may not be accessible from the debugger
+LINK : warning LNK4020: a type record in '' is corrupted; some symbols and types may not be accessible from the debugger
+LINK : warning LNK4020: a type record in '' is corrupted; some symbols and types may not be accessible from the debugger
+LINK : warning LNK4020: a type record in '' is corrupted; some symbols and types may not be accessible from the debugger
   ContraNES.vcxproj -> C:\Users\qdo20\source\repos\Contra\ContraNES\x64\Debug\ContraNES.exe

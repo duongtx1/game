@@ -147,6 +147,7 @@
     <None Include="Map.data" />
     <None Include="Map2.data" />
     <None Include="packages.config" />
+    <None Include="Stage_1.data" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />

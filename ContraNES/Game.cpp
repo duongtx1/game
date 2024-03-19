@@ -678,7 +678,7 @@ void CGame::Load(LPCWSTR gameFile) {
 	animations->Add(ID_ANI_BILL_IDLE_LEFT, ani);
 
 	player = new CPlayer(2500, 100, CONTRA_START_VX, CONTRA_START_VY, texPlayer);
-
+	player->Stop();
 	Keyboard::GetInstance()->SetKeyEventHandler(player);
 	keyHandler = player;
 

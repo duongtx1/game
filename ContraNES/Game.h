@@ -101,13 +101,6 @@ public:
 
 	LPTEXTURE LoadTexture(LPCWSTR texturePath);
 
-	// Keyboard related functions 
-	void InitKeyboard();
-	int IsKeyDown(int KeyCode);
-	void ProcessKeyboard();
-	void SetKeyHandler(LPKEYEVENTHANDLER handler) { keyHandler = handler; }
-
-
 	ID3D10Device* GetDirect3DDevice() { return this->pD3DDevice; }
 	IDXGISwapChain* GetSwapChain() { return this->pSwapChain; }
 	ID3D10RenderTargetView* GetRenderTargetView() { return this->pRenderTargetView; }

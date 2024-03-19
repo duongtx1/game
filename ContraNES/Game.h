@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include <string>
 
+#include "Animations.h"
+
 using namespace std;
 
 #define DIRECTINPUT_VERSION 0x0800
@@ -28,7 +30,8 @@ using namespace std;
 #define BRICK_X 10.0f
 #define BRICK_Y 120.0f
 
-#define TEXTURE_PATH_CONTRA L"LanceStandingL.png"
+//#define TEXTURE_PATH_CONTRA L"LanceStandingL.png"
+#define TEXTURE_PATH_CONTRA L"Contra_Sprites.png"
 
 
 /*

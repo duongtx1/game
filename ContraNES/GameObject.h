@@ -11,6 +11,8 @@ class CGameObject
 protected:
 	float x;
 	float y;
+	int nx;
+	int state;
 
 	// This should be a pointer to an object containing all graphic/sound/audio assets for rendering this object. 
 	// For now, just a pointer to a single texture
@@ -24,6 +26,9 @@ public:
 
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
+
+	void SetState(int state) { this->state = state; }
+	int GetState() { return this->state; }
 
 	~CGameObject();
 };

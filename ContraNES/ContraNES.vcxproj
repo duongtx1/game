@@ -128,6 +128,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -147,6 +149,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationFrame.h" />
+    <ClInclude Include="Animations.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Game.h" />
@@ -162,6 +167,9 @@
     <ClInclude Include="Textures.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="ContraMapStage1BG.jpg" />
+    <Image Include="Contra_MapTile.png" />
+    <Image Include="Contra_Sprites.png" />
     <Image Include="LanceStandingL.png" />
   </ItemGroup>
   <ItemGroup>

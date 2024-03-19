@@ -51,6 +51,12 @@
     <ClCompile Include="Sprites.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Animations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -97,9 +103,27 @@
     <ClInclude Include="Sprites.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="LanceStandingL.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ContraMapStage1BG.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Contra_MapTile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Contra_Sprites.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

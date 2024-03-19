@@ -45,3 +45,4 @@ void SetDebugWindow(HWND hwnd);
 LPCWSTR ToLPCWSTR(string st);
 
 vector<string> split(string line, string delimeter = "\t");
+wstring ToWSTR(string st);

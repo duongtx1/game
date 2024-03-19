@@ -48,3 +48,17 @@ vector<string> split(string line, string delimeter)
 
 	return tokens;
 }
+wstring ToWSTR(string st)
+{
+	const char* str = st.c_str();
+
+	size_t newsize = strlen(str) + 1;
+	wchar_t* wcstring = new wchar_t[newsize];
+	size_t convertedChars = 0;
+	mbstowcs_s(&convertedChars, wcstring, newsize, str, _TRUNCATE);
+
+	wstring wstr(wcstring);
+
+	// delete wcstring   // << can I ? 
+	return wstr;
+}

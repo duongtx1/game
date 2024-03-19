@@ -324,7 +324,8 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 #define GAME_FILE_SECTION_SETTINGS 1
 #define GAME_FILE_SECTION_SCENES 2
 #define GAME_FILE_SECTION_TEXTURES 3
-
+#define GAME_FILE_SECTION_SPRITES 4
+#define GAME_FILE_SECTION_ANIMATIONS 5
 
 //void CGame::_ParseSection_SETTINGS(string line)
 //{
@@ -419,17 +420,57 @@ void CGame::InitiateSwitchScene(int scene_id)
 }
 
 
-//void CGame::_ParseSection_TEXTURES(string line)
-//{
-//	vector<string> tokens = split(line);
-//
-//	if (tokens.size() < 2) return;
-//
-//	int texID = atoi(tokens[0].c_str());
-//	wstring path = ToWSTR(tokens[1]);
-//
-//	CTextures::GetInstance()->Add(texID, path.c_str());
-//}
+void CGame::_ParseSection_TEXTURES(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return;
+
+	int texID = atoi(tokens[0].c_str());
+	wstring path = ToWSTR(tokens[1]);
+
+	CTextures::GetInstance()->Add(texID, path.c_str());
+}
+
+void CGame::_ParseSection_ANIMATIONS(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 3) return; // skip invalid lines - an animation must at least has 1 frame and 1 frame time
+
+	LPANIMATION ani = new CAnimation();
+
+	int ani_id = atoi(tokens[0].c_str());
+	for (int i = 1; i < tokens.size(); i += 2)
+	{
+
+		int sprite_id = atoi(tokens[i].c_str());
+		int frame_time = atoi(tokens[i + 1].c_str());
+		ani->Add(sprite_id, frame_time);
+	}
+
+	CAnimations::GetInstance()->Add(ani_id, ani);
+}
+
+
+void CGame::_ParseSection_SPRITES(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 6) return;
+
+	int spriteID, l, t, r, b, texId;
+	spriteID = atoi(tokens[0].c_str());
+	l = atoi(tokens[1].c_str());
+	t = atoi(tokens[2].c_str());
+	r = atoi(tokens[3].c_str());
+	b = atoi(tokens[4].c_str());
+
+	texId = atoi(tokens[5].c_str());
+	LPTEXTURE tex = CTextures::GetInstance()->Get(texId);
+
+	CSprites::GetInstance()->Add(spriteID, l, t, r, b, tex);
+}
 
 
 CGame::~CGame()

@@ -202,7 +202,6 @@ int WINAPI WinMain(
 
 	LPGAME game = CGame::GetInstance();
 	game->Init(hWnd, hInstance);
-	game->InitKeyboard();
 	Keyboard::GetInstance()->InitKeyboard(hInstance, hWnd);
 
 	//IMPORTANT: this is the only place where a hardcoded file name is allowed ! 

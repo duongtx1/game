@@ -1,8 +1,3 @@
-﻿  Player.cpp
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-C:\Users\qdo20\source\repos\Contra\ContraNES\Game.h(12,1): warning C4005: 'DIRECTINPUT_VERSION': macro redefinition
-  (compiling source file 'Player.cpp')
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h(48,1):
-  see previous definition of 'DIRECTINPUT_VERSION'
-  
+﻿  Game.cpp
+C:\Users\qdo20\source\repos\Contra\ContraNES\Game.cpp(467,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   ContraNES.vcxproj -> C:\Users\qdo20\source\repos\Contra\ContraNES\x64\Debug\ContraNES.exe

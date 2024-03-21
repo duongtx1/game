@@ -571,8 +571,7 @@ void CGame::Load(LPCWSTR gameFile) {
 	CTextures* textures = CTextures::GetInstance();
 	texPlayer = textures->Get(0);
 
-	player = new CPlayer(2500, 100, CONTRA_START_VX, CONTRA_START_VY, texPlayer);
-	player->Stop();
+	player = new CPlayer(2500, 100, 0.0f, CONTRA_START_VY, texPlayer);
 
 	Keyboard::GetInstance()->SetKeyEventHandler(player);
 	keyHandler = player;

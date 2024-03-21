@@ -8,3 +8,8 @@ D:\UDC\game\ContraNES\x64\Debug\d3dx9d_43.dll
 D:\UDC\game\ContraNES\x64\Debug\d3dx10d_43.dll
 D:\UDC\game\ContraNES\x64\Debug\d3dx11d_43.dll
 D:\UDC\game\ContraNES\ContraNES\x64\Debug\ContraNES.vcxproj.Up2Date
+C:\Users\duong\OneDrive\Desktop\game\ContraNES\x64\Debug\D3DCompiler_43.dll
+C:\Users\duong\OneDrive\Desktop\game\ContraNES\x64\Debug\d3dx9d_43.dll
+C:\Users\duong\OneDrive\Desktop\game\ContraNES\x64\Debug\d3dx10d_43.dll
+C:\Users\duong\OneDrive\Desktop\game\ContraNES\x64\Debug\d3dx11d_43.dll
+C:\Users\duong\OneDrive\Desktop\game\ContraNES\ContraNES\x64\Debug\ContraNES.vcxproj.Up2Date

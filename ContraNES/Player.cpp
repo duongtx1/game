@@ -44,8 +44,7 @@ void CPlayer::Render()
 			aniId = ID_ANI_JUMPING_LEFT;
 		}
 	}
-	else
-		if (IsKeyDown(DIK_S)) {
+	else if (IsKeyDown(DIK_S)) {
 			if (nx >= 0) {
 				aniId = ID_ANI_LYING_RIGHT;
 			}
@@ -53,6 +52,14 @@ void CPlayer::Render()
 				aniId = ID_ANI_LYING_LEFT;
 			}
 		}
+	else if (IsKeyDown(DIK_W)) {
+			if (nx >= 0) {
+				aniId = ID_ANI_UP_RIGHT;
+			}
+				else {
+					aniId = ID_ANI_UP_LEFT;
+				}
+		    }
 	else {
 		if (vx == 0) {
 			if (nx >= 0) {
@@ -94,7 +101,7 @@ void CPlayer::KeyState(BYTE* state)
 		SetState(BILL_STATE_LIE);
 	}
 	else if (IsKeyDown(DIK_W)) {
-		y++;
+		SetState(BILL_STATE_UP);
 	}
 	else
 		Stop();
@@ -113,7 +120,11 @@ void CPlayer::OnKeyDown(int KeyCode)
 
 	case DIK_S:
 		SetState(BILL_STATE_LIE); break;
+
+	case DIK_W:
+		SetState(BILL_STATE_UP); break;
 	}
+
 }
 
 void CPlayer::OnKeyUp(int KeyCode)
@@ -124,6 +135,8 @@ void CPlayer::OnKeyUp(int KeyCode)
 		SetState(BILL_STATE_RELEASE_JUMP); break;
 	case DIK_S:
 		SetState(BILL_STATE_LIE_RELEASE); break;
+	case DIK_W:
+		SetState(BILL_STATE_UP_RELEASE); break;
 	}
 }
 
@@ -131,12 +144,12 @@ void CPlayer::SetState(int state) {
 	switch (state)
 	{
 	case BILL_STATE_RUNNING_RIGHT:
-		if (IsKeyDown(DIK_S)) break;
+		if (IsKeyDown(DIK_S) || IsKeyDown(DIK_W)) break;
 		vx = BILL_RUN_SPEED;
 		nx = 1;
 		break;
 	case BILL_STATE_RUNNING_LEFT:
-		if (IsKeyDown(DIK_S)) break;
+		if (IsKeyDown(DIK_S)||IsKeyDown(DIK_W)) break;
 		vx = -BILL_RUN_SPEED;
 		nx = -1;
 		break;
@@ -157,11 +170,22 @@ void CPlayer::SetState(int state) {
 		}
 		break;
 	case BILL_STATE_LIE_RELEASE:
-	/*	isLying = false;*/
+		/*	isLying = false;*/
 		state = BILL_STATE_IDLE;
 		break;
 	case BILL_STATE_IDLE:
 		vx = 0.0f;
+		break;
+	case BILL_STATE_UP:
+		if (y == GROUND_Y) {
+			state = BILL_STATE_IDLE;
+			//isLying = true;
+			vx = 0; vy = 0;
+		}
+		break;
+	case BILL_STATE_UP_RELEASE:
+		/*	isLying = false;*/
+		state = BILL_STATE_IDLE;
 		break;
 	}
 	CGameObject::SetState(state);

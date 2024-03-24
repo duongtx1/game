@@ -33,6 +33,11 @@
 #define ID_ANI_LYING_RIGHT 800
 #define ID_ANI_LYING_LEFT 801
 
+#define ID_ANI_UP_RIGHT 900
+#define ID_ANI_UP_LEFT 901
+
+#define BILL_STATE_UP	1000
+#define BILL_STATE_UP_RELEASE 1001	
 class CPlayer : public CGameObject, public KeyEventHandler
 {
 	float vx;

@@ -10,13 +10,13 @@
 void CPlayer::Update(DWORD dt)
 {
 	x += vx * dt;
-	y += vy * dt;
-	vy += BILL_GRAVITY * dt;
+	//y += vy * dt;
+	//vy += BILL_GRAVITY * dt;
 
-	if (y > GROUND_Y) {
+	/*if (y > GROUND_Y) {
 		vy = 0;
 		y = GROUND_Y;
-	}
+	}*/
 	//DebugOut(L"%0.2f\t\t%0.2f\t\n", x, y);
 	int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
 	if (x <= 0 || x >= 4000 - CONTRA_WIDTH) {
@@ -53,22 +53,22 @@ void CPlayer::Render()
 				aniId = ID_ANI_LYING_LEFT;
 			}
 		}
-	else {
-		if (vx == 0) {
-			if (nx >= 0) {
-				aniId = ID_ANI_BILL_IDLE_RIGHT;
+		else {
+			if (vx == 0) {
+				if (nx >= 0) {
+					aniId = ID_ANI_BILL_IDLE_RIGHT;
+				}
+				else {
+					aniId = ID_ANI_BILL_IDLE_LEFT;
+				}
+			}
+			else if (vx > 0) {
+				aniId = ID_ANI_RUNNING_RIGHT;
 			}
 			else {
-				aniId = ID_ANI_BILL_IDLE_LEFT;
+				aniId = ID_ANI_RUNNING_LEFT;
 			}
 		}
-		else if (vx > 0) {
-			aniId = ID_ANI_RUNNING_RIGHT;
-		}
-		else {
-			aniId = ID_ANI_RUNNING_LEFT;
-		}
-	}
 
 	if (aniId == -1) {
 		aniId = ID_ANI_BILL_IDLE_RIGHT;
@@ -96,12 +96,14 @@ void CPlayer::KeyState(BYTE* state)
 	else if (IsKeyDown(DIK_W)) {
 		y++;
 	}
+	else if (IsKeyDown(DIK_UPARROW)) {
+		y--;
+	}
+	else if (IsKeyDown(DIK_DOWNARROW)) {
+		y++;
+	}
 	else
 		Stop();
-	/*else if (IsKeyDown(DIK_S)) {
-		Stop();
-	}*/
-
 }
 
 void CPlayer::OnKeyDown(int KeyCode)
@@ -157,7 +159,7 @@ void CPlayer::SetState(int state) {
 		}
 		break;
 	case BILL_STATE_LIE_RELEASE:
-	/*	isLying = false;*/
+		/*	isLying = false;*/
 		state = BILL_STATE_IDLE;
 		break;
 	case BILL_STATE_IDLE:

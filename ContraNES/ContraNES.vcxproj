@@ -139,13 +139,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Map.data" />
-    <None Include="Map2.data" />
+    <None Include="Stage3Map.data" />
+    <None Include="Stage1Map.data" />
     <None Include="packages.config" />
     <None Include="Stage_1.data" />
   </ItemGroup>
@@ -161,7 +162,9 @@
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayScene.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Texture.h" />

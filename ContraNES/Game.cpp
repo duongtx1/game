@@ -508,8 +508,8 @@ void CGame::Update(DWORD dt) {
 		cx = map->getMapWidth() - game->GetBackBufferWidth();
 		//cx = 3008;
 	}
-	if (cy < 0) cy = 0;
-	cy = 10;
+	//if (cy < 0) cy = 0;
+	//cy = 10;
 	// TODO: fix this temp solution
 
 	CGame::GetInstance()->SetCamPos(cx, cy);
@@ -576,7 +576,7 @@ void CGame::Load(LPCWSTR gameFile) {
 	Keyboard::GetInstance()->SetKeyEventHandler(player);
 	keyHandler = player;
 
-	map = new CMap(L"Map2.data");
+	map = new CMap(L"Stage1Map.data");
 
 	texPlayer = LoadTexture(TEXTURE_PATH_CONTRA);
 	for (int i = 1; i < 40; i++)

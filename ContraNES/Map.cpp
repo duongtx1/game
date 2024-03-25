@@ -53,6 +53,8 @@ void CMap::Render()
 	CGame::GetInstance()->GetCamPos(x, y);
 	int startX = (int)(x / width * column - 2);
 	int startY = (int)(y / height * row);
+	if (startX < 0) startX = 0;
+	if (startY < 0) startY = 0;
 	int endX = startX + offsetW > column ? column : startX + offsetW;
 	int endY = startY + offsetH > row ? row : startY + offsetH;
 	for (int i = startY; i < endY; i++) {

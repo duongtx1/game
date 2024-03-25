@@ -39,6 +39,7 @@ class CPlayer : public CGameObject, public KeyEventHandler
 	float vy;
 	LPSPRITE sprite = NULL;
 public:
+	CPlayer() { x = y = 0; vx = vy = 0; }
 	CPlayer(float x, float y, float vx, float vy, LPTEXTURE texture) :CGameObject(x, y, texture)
 	{
 		sprite = new CSprite(0, 0, 25, 34, texture);

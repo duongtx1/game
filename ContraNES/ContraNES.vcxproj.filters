@@ -57,11 +57,14 @@
     <ClCompile Include="Animations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Map.data" />
-    <None Include="Map2.data" />
+    <None Include="Stage3Map.data" />
+    <None Include="Stage1Map.data" />
     <None Include="Stage_1.data" />
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +114,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Animations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

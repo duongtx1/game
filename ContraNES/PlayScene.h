@@ -4,20 +4,22 @@
 #include "Scene.h"
 #include "GameObject.h"
 #include "Player.h"
+#include "Keyboard.h"
 
-class CPlayScene : public CScene
+class CPlayScene : public CScene, public KeyEventHandler
 {
 protected:
-	// A play scene has to have player, right? 
 	CPlayer* player;
+	CMap* map;
 
 	vector<LPGAMEOBJECT> objects;
 
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
+	void _ParseSection_MAP(string line);
 
-	void _ParseSection_ASSETS(string line);
-	void _ParseSection_OBJECTS(string line);
+	void _ParseSectionAnimations(string line);
+	void _ParseSectionSprites(string line);
 
 	void LoadAssets(LPCWSTR assetFile);
 
@@ -35,6 +37,7 @@ public:
 	void PurgeDeletedObjects();
 
 	static bool IsGameObjectDeleted(const LPGAMEOBJECT& o);
+	void OnKeyDown(int KeyCode);
 };
 
 typedef CPlayScene* LPPLAYSCENE;

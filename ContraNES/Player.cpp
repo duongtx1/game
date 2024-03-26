@@ -45,7 +45,7 @@ void CPlayer::Render()
 		}
 	}
 	else
-		if (IsKeyDown(DIK_S)) {
+		if (state == BILL_STATE_LIE) {
 			if (nx >= 0) {
 				aniId = ID_ANI_LYING_RIGHT;
 			}

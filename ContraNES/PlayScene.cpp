@@ -15,8 +15,9 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) :
 
 
 #define SCENE_SECTION_UNKNOWN -1
-#define SCENE_SECTION_ASSETS	1
-#define SCENE_SECTION_OBJECTS	2
+#define SCENE_SECTION_ANIMATIONS	1
+#define SCENE_SECTION_SPRITES	2
+#define SCENE_SECTION_MAP 3
 
 #define ASSETS_SECTION_UNKNOWN -1
 #define ASSETS_SECTION_SPRITES 1
@@ -47,7 +48,7 @@ void CPlayScene::_ParseSection_SPRITES(string line)
 	CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
 }
 
-void CPlayScene::_ParseSection_ASSETS(string line)
+void CPlayScene::_ParseSectionAnimations(string line)
 {
 	vector<string> tokens = split(line);
 
@@ -79,10 +80,16 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 	CAnimations::GetInstance()->Add(ani_id, ani);
 }
 
+void CPlayScene::_ParseSection_MAP(string line)
+{
+	LPCWSTR path = ToLPCWSTR(line.c_str());
+	map = new CMap(path);
+}
+
 /*
 	Parse a line in section [OBJECTS]
 */
-void CPlayScene::_ParseSection_OBJECTS(string line)
+void CPlayScene::_ParseSectionSprites(string line)
 {
 	vector<string> tokens = split(line);
 
@@ -103,8 +110,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	// General object setup
 	obj->SetPosition(x, y);
-
-
 	objects.push_back(obj);
 }
 
@@ -124,8 +129,8 @@ void CPlayScene::LoadAssets(LPCWSTR assetFile)
 
 		if (line[0] == '#') continue;	// skip comment lines	
 
-		if (line == "[SPRITES]") { section = ASSETS_SECTION_SPRITES; continue; };
-		if (line == "[ANIMATIONS]") { section = ASSETS_SECTION_ANIMATIONS; continue; };
+		if (line == "[Sprites]") { section = ASSETS_SECTION_SPRITES; continue; };
+		if (line == "[Animations]") { section = ASSETS_SECTION_ANIMATIONS; continue; };
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		//
@@ -159,8 +164,11 @@ void CPlayScene::Load()
 		string line(str);
 
 		if (line[0] == '#') continue;	// skip comment lines	
-		if (line == "[ASSETS]") { section = SCENE_SECTION_ASSETS; continue; };
-		if (line == "[OBJECTS]") { section = SCENE_SECTION_OBJECTS; continue; };
+		if (line == "[Sprites]") { section = SCENE_SECTION_SPRITES; continue; };
+		if (line == "[Animations]") { section = SCENE_SECTION_ANIMATIONS; continue; };
+		if (line == "[Maps]") {
+			section = SCENE_SECTION_MAP; continue;
+		};
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		//
@@ -168,12 +176,15 @@ void CPlayScene::Load()
 		//
 		switch (section)
 		{
-		case SCENE_SECTION_ASSETS: _ParseSection_ASSETS(line); break;
-		case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
+		case SCENE_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
+		case SCENE_SECTION_SPRITES: _ParseSection_SPRITES(line); break;
+		case SCENE_SECTION_MAP: _ParseSection_MAP(line); break;
 		}
 	}
 
 	f.close();
+
+	Keyboard::GetInstance()->SetKeyEventHandler(this);
 
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
 }
@@ -217,6 +228,8 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
+	map->Render();
+
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 }
@@ -271,4 +284,13 @@ void CPlayScene::PurgeDeletedObjects()
 	objects.erase(
 		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
 		objects.end());
+}
+
+
+
+void CPlayScene::OnKeyDown(int KeyCode) {
+	if (KeyCode == DIK_3) {
+		CScenes::GetInstance()->InitiateSwitchScene(2);
+	}
+	return;
 }

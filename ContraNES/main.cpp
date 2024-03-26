@@ -13,10 +13,10 @@
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 #define WINDOW_ICON_PATH L"mario.ico"
 
-#define BACKGROUND_COLOR D3DXCOLOR(255, 255, 255.0f, 0.0f)
+#define BACKGROUND_COLOR D3DXCOLOR(0, 0, 0, 0.0f)
 
 #define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 256
+#define SCREEN_HEIGHT 263
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -143,8 +143,6 @@ int Run()
 			Keyboard::GetInstance()->ProcessKeyboard();
 			Update(dt);
 			Render();
-
-			CGame::GetInstance()->SwitchScene();
 		}
 		else
 			Sleep(tickPerFrame - dt);

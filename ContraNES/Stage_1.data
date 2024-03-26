@@ -2,6 +2,11 @@
 
 [Textures]
 0	Contra_Sprites.png
+30	./Resources/Maps/ContraMapStage1TileSheet.png
+40	./Resources/Maps/ContraMapStage3TileSheet.png
+[Maps]
+./Resources/Maps/Stage1Map.data
+./Resources/Maps/Stage3Map.data
 [Sprites]
 10001	25	24	44	59	0
 10002	90	27	110	58	0

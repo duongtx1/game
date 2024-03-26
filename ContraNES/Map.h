@@ -13,12 +13,19 @@ class CMap {
 	int column, row = 0;
 	int tileSize = 0;
 	int tileColumn, tileRow = 0;
-	int tiles[30][208] = { -1, -1 };
-	int currentRow = 0; // util for parsing from text.
+	// Map matrix
+	vector<vector<int>> tiles;
+	// Util for parsing from text.
+	int currentRow = 0;
+	// Map Tiles texture
 	LPTEXTURE tex = NULL;
-	int width, height;
 
 	int offsetW, offsetH;	// number of tile need to render
+	int width, height;
+
+	void _LoadMapTiles();
+	void _ParseSection_MapTile(string line);
+	void _ParseSection_Info(string line);
 public:
 	CMap(wstring path);
 	~CMap();
@@ -27,7 +34,4 @@ public:
 	int getMapHeight() { return height; }
 	void Load(wstring path);
 	void Render();
-	void _ParseSection_MapTile(string line);
-	void _ParseSection_Info(string line);
-	void LoadMapTiles();
 };

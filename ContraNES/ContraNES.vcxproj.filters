@@ -63,9 +63,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Stage3Map.data" />
-    <None Include="Stage1Map.data" />
     <None Include="Stage_1.data" />
+    <None Include="Resources\Maps\ContraMapStage1BG_map.json" />
+    <None Include="Resources\Maps\ContraMapStage3BG_map.json" />
+    <None Include="Resources\Maps\Stage1Map.data" />
+    <None Include="Resources\Maps\Stage3Map.data" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h">
@@ -134,6 +136,24 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Contra_Sprites.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Maps\ContraMapStage1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Maps\ContraMapStage1BG.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Maps\ContraMapStage1TileSheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Maps\ContraMapStage3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Maps\ContraMapStage3BG.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Maps\ContraMapStage3TileSheet.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

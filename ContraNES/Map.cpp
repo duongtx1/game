@@ -4,7 +4,7 @@
 #define MAP_INFO_SECTION 1
 #define MAP_TILE_SECTION 2
 #define MAP_UNKNOWN_SECTION -1
-#define TEX_MAP_ID = 30
+
 CMap::CMap(wstring path)
 {
 	Load(path);
@@ -44,7 +44,7 @@ void CMap::Load(wstring path)
 		}
 	}
 	f.close();
-	LoadMapTiles();
+	_LoadMapTiles();
 }
 
 void CMap::Render()
@@ -88,15 +88,21 @@ void CMap::_ParseSection_Info(string line)
 	tileRow = atoi(tokens[2].c_str());
 	tileColumn = atoi(tokens[3].c_str());
 	tileSize = atoi(tokens[4].c_str());
-	tex = CGame::GetInstance()->LoadTexture(L"Contra_MapTile.png");
-	height = row * tileSize;
+
 	width = column * tileSize;
+	height = row * tileSize;
+
+	int texID = atoi(tokens[5].c_str());
+	tex = CTextures::GetInstance()->Get(texID);
+
+	// Resize the matrix to the size of the map with default value to zero
+	tiles.resize(row, vector<int>(column, 0));
 
 	offsetW = 40;// CGame::GetInstance()->GetBackBufferWidth() / tileSize + EXTRA_TILE;
 	offsetH = 40;// CGame::GetInstance()->GetBackBufferHeight() / tileSize + EXTRA_TILE;
 }
 
-void CMap::LoadMapTiles() {
+void CMap::_LoadMapTiles() {
 	int id = 0;
 	for (int i = 0; i < tileRow; i++)
 	{

@@ -60,6 +60,9 @@
     <ClCompile Include="PlayScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Scenes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -68,6 +71,9 @@
     <None Include="Resources\Maps\ContraMapStage3BG_map.json" />
     <None Include="Resources\Maps\Stage1Map.data" />
     <None Include="Resources\Maps\Stage3Map.data" />
+    <None Include="Scenes.data" />
+    <None Include="Resources\Stage_1.data" />
+    <None Include="Resources\Stage_3.data" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h">
@@ -122,6 +128,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

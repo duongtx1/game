@@ -24,7 +24,7 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	GetClientRect(hWnd, &r);
 
 	backBufferWidth = r.right;
-	backBufferHeight = r.bottom + 1;
+	backBufferHeight = r.bottom;
 
 	DebugOut(L"[INFO] Window's client area: width= %d, height= %d\n", r.right - 1, r.bottom - 1);
 
@@ -150,6 +150,9 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	pD3DDevice->CreateBlendState(&StateDesc, &this->pBlendStateAlpha);
 
 	DebugOut((wchar_t*)L"[INFO] InitDirectX has been successful\n");
+
+	scenes = CScenes::GetInstance();
+	scenes->InitScenes(L"Scenes.data");
 
 	return;
 }
@@ -414,11 +417,6 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 //	s->Load();
 //}
 
-void CGame::InitiateSwitchScene(int scene_id)
-{
-	next_scene = scene_id;
-}
-
 
 void CGame::_ParseSection_TEXTURES(string line)
 {
@@ -489,34 +487,37 @@ CGame* CGame::GetInstance()
 }
 
 void CGame::Update(DWORD dt) {
-	player->Update(dt);
-	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
-	if (player == NULL) return;
+	scenes->SwitchScene();
+	scenes->GetCurrentScene()->Update(dt);
+	//player->Update(dt);
+	//// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
+	//if (player == NULL) return;
 
-	// Update camera to follow mario
-	float cx, cy;
-	player->GetPosition(cx, cy);
-	float cc;
-	cc = cx;
+	//// Update camera to follow mario
+	//float cx, cy;
+	//player->GetPosition(cx, cy);
+	//float cc;
+	//cc = cx;
 
-	CGame* game = CGame::GetInstance();
-	cx -= game->GetBackBufferWidth() / 2;
-	cy -= game->GetBackBufferHeight() / 2;
+	//CGame* game = CGame::GetInstance();
+	//cx -= game->GetBackBufferWidth() / 2;
+	//cy -= game->GetBackBufferHeight() / 2;
 
-	if (cx < 0) cx = 0;
-	if (cx > map->getMapWidth() - game->GetBackBufferWidth()) { //3328 305
-		cx = map->getMapWidth() - game->GetBackBufferWidth();
-		//cx = 3008;
-	}
-	//if (cy < 0) cy = 0;
-	//cy = 10;
-	// TODO: fix this temp solution
+	//if (cx < 0) cx = 0;
+	//if (cx > map->getMapWidth() - game->GetBackBufferWidth()) { //3328 305
+	//	cx = map->getMapWidth() - game->GetBackBufferWidth();
+	//	//cx = 3008;
+	//}
 
-	CGame::GetInstance()->SetCamPos(cx, cy);
-	//DebugOut(L"%0.2f\t   %0.2f\t\n", cx, cy);
+	//// TODO: fix this temp solution
+	//// Neu map vertical => di chuyen cy 
+	//cy = -8;
+
+	//CGame::GetInstance()->SetCamPos(cx, cy);
+	//DebugOutTitle(L"%0.2f\t   %0.2f\t\n", cx, cy);
 }
 void CGame::Render() {
-	map->Render();
+	scenes->GetCurrentScene()->Render();
 	player->Render();
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
@@ -571,13 +572,9 @@ void CGame::Load(LPCWSTR gameFile) {
 	CTextures* textures = CTextures::GetInstance();
 	texPlayer = textures->Get(0);
 
-	player = new CPlayer(2500, 100, 0.0f, CONTRA_START_VY, texPlayer);
-
-	Keyboard::GetInstance()->SetKeyEventHandler(player);
-	keyHandler = player;
-
-	map = new CMap(L"./Resources/Maps/Stage1Map.data");
-	//map = new CMap(L"Stage3Map.data");
+	player = new CPlayer(500, 100, 0.0f, CONTRA_START_VY, texPlayer);
+	Keyboard::GetInstance()->SetKeyEventHandler(this);
+	keyHandler = this;
 
 	texPlayer = LoadTexture(TEXTURE_PATH_CONTRA);
 	for (int i = 1; i < 40; i++)
@@ -586,4 +583,3 @@ void CGame::Load(LPCWSTR gameFile) {
 		objects.push_back(b);
 	}
 }
-void CGame::SwitchScene() {}

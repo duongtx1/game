@@ -16,7 +16,7 @@ using namespace std;
 #include "KeyEventHandler.h"
 #include "Player.h"
 #include "Map.h"
-//#include "Scene.h"
+#include "Scenes.h"
 
 #define MAX_FRAME_RATE 100
 #define KEYBOARD_BUFFER_SIZE 1024
@@ -37,7 +37,7 @@ using namespace std;
 /*
 	Our simple game framework
 */
-class CGame
+class CGame : public KeyEventHandler
 {
 	static CGame* __instance;
 	HWND hWnd;									// Window handle
@@ -67,11 +67,10 @@ class CGame
 
 	ID3D10SamplerState* pPointSamplerState;
 
-	//unordered_map<int, LPSCENE> scenes;
 	int current_scene;
 	int next_scene = -1;
 	CPlayer* player;
-	CMap* map;
+	CScenes* scenes;
 
 	LPTEXTURE texPlayer = NULL;
 	vector<LPGAMEOBJECT> objects;
@@ -122,8 +121,6 @@ public:
 	}
 
 	//LPSCENE GetCurrentScene() { return scenes[current_scene]; }
-	void SwitchScene();
-	void InitiateSwitchScene(int scene_id);
 	CPlayer* GetPlayer() { return player; }
 
 

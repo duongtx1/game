@@ -489,6 +489,8 @@ CGame* CGame::GetInstance()
 void CGame::Update(DWORD dt) {
 	scenes->SwitchScene();
 	scenes->GetCurrentScene()->Update(dt);
+	Keyboard::GetInstance()->ProcessKeyboard();
+
 	//player->Update(dt);
 	//// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	//if (player == NULL) return;
@@ -518,10 +520,6 @@ void CGame::Update(DWORD dt) {
 }
 void CGame::Render() {
 	scenes->GetCurrentScene()->Render();
-	player->Render();
-	for (int i = 0; i < objects.size(); i++)
-		objects[i]->Render();
-
 }
 void CGame::Load(LPCWSTR gameFile) {
 	DebugOut(L"[INFO] Start loading game file : %s\n", gameFile);
@@ -568,18 +566,4 @@ void CGame::Load(LPCWSTR gameFile) {
 	f.close();
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
-
-	CTextures* textures = CTextures::GetInstance();
-	texPlayer = textures->Get(0);
-
-	player = new CPlayer(500, 100, 0.0f, CONTRA_START_VY, texPlayer);
-	Keyboard::GetInstance()->SetKeyEventHandler(this);
-	keyHandler = this;
-
-	texPlayer = LoadTexture(TEXTURE_PATH_CONTRA);
-	for (int i = 1; i < 40; i++)
-	{
-		CBrick* b = new CBrick(i * BRICK_WIDTH * 1.0f, 200, texPlayer);
-		objects.push_back(b);
-	}
 }

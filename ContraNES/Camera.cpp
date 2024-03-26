@@ -18,13 +18,13 @@ void Camera::setPosCamera(float x, float y)
 
 void Camera::Update(DWORD dt)
 {
-	CPlayer* player = CGame::GetInstance()->GetPlayer();
+	/*CPlayer* player = CGame::GetInstance()->GetPlayer();
 	if (player->GetX() > camx + width / 2)
-		camx += vx * dt;
+		camx += vx * dt;*/
 
-	//int mapwidth = game->GetCurrentScene().GetMapWidth();
-	//if (camx > mapwidth - width)
-		//camx = mapwidth - width;
+		//int mapwidth = game->GetCurrentScene().GetMapWidth();
+		//if (camx > mapwidth - width)
+			//camx = mapwidth - width;
 }
 
 

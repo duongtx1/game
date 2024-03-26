@@ -69,7 +69,6 @@ class CGame : public KeyEventHandler
 
 	int current_scene;
 	int next_scene = -1;
-	CPlayer* player;
 	CScenes* scenes;
 
 	LPTEXTURE texPlayer = NULL;
@@ -121,8 +120,6 @@ public:
 	}
 
 	//LPSCENE GetCurrentScene() { return scenes[current_scene]; }
-	CPlayer* GetPlayer() { return player; }
-
 
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);

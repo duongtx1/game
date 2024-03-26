@@ -184,7 +184,12 @@ void CPlayScene::Load()
 
 	f.close();
 
-	Keyboard::GetInstance()->SetKeyEventHandler(this);
+
+	CTextures* textures = CTextures::GetInstance();
+	CTexture* texPlayer = textures->Get(0);
+
+	player = new CPlayer(100, 200, 0.0f, CONTRA_START_VY, texPlayer);
+	key_handler = player;
 
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
 }
@@ -208,6 +213,7 @@ void CPlayScene::Update(DWORD dt)
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
 
+	player->Update(dt);
 	// Update camera to follow mario
 	float cx, cy;
 	player->GetPosition(cx, cy);
@@ -219,9 +225,17 @@ void CPlayScene::Update(DWORD dt)
 	cy -= game->GetBackBufferHeight() / 2;
 
 	if (cx < 0) cx = 0;
+	if (cx > map->getMapWidth() - game->GetBackBufferWidth()) { //3328 305
+		cx = map->getMapWidth() - game->GetBackBufferWidth();
+		//cx = 3008;
+	}
 
-	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
-	DebugOutTitle(L"%0.2f\t   %0.2f\t", cx, cc);
+	// TODO: fix this temp solution
+	// Neu map vertical => di chuyen cy 
+	//cy = -8;
+
+	CGame::GetInstance()->SetCamPos(cx, cy);
+	DebugOutTitle(L"%0.2f\t   %0.2f\t\n", cx, cy);
 
 	PurgeDeletedObjects();
 }
@@ -229,6 +243,7 @@ void CPlayScene::Update(DWORD dt)
 void CPlayScene::Render()
 {
 	map->Render();
+	player->Render();
 
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();

@@ -140,7 +140,6 @@ int Run()
 		{
 			frameStart = now;
 
-			Keyboard::GetInstance()->ProcessKeyboard();
 			Update(dt);
 			Render();
 		}

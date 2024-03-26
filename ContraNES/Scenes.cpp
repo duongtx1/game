@@ -62,7 +62,7 @@ void CScenes::SwitchScene()
 	currentScene = nextScene;
 	scenes[nextScene]->Load();
 
-	//Keyboard::GetInstance()->SetKeyEventHandler(scenes[nextScene]->GetKeyEventHandler());
+	Keyboard::GetInstance()->SetKeyEventHandler(scenes[nextScene]->GetKeyEventHandler());
 }
 
 void CScenes::InitiateSwitchScene(int id)

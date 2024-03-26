@@ -1,32 +1,4 @@
-﻿  Camera.cpp
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-C:\Users\qdo20\source\repos\Contra\ContraNES\Game.h(12,1): warning C4005: 'DIRECTINPUT_VERSION': macro redefinition
-  (compiling source file 'Camera.cpp')
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h(48,1):
-  see previous definition of 'DIRECTINPUT_VERSION'
-  
-  Game.cpp
-  GameObject.cpp
-  Map.cpp
-  PlayScene.cpp
+﻿  PlayScene.cpp
 C:\Users\qdo20\source\repos\Contra\ContraNES\PlayScene.cpp(109,2): warning C4060: switch statement contains no 'case' or 'default' labels
-  Player.cpp
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-C:\Users\qdo20\source\repos\Contra\ContraNES\Game.h(12,1): warning C4005: 'DIRECTINPUT_VERSION': macro redefinition
-  (compiling source file 'Player.cpp')
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h(48,1):
-  see previous definition of 'DIRECTINPUT_VERSION'
-  
-  Scenes.cpp
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-C:\Users\qdo20\source\repos\Contra\ContraNES\Game.h(12,1): warning C4005: 'DIRECTINPUT_VERSION': macro redefinition
-  (compiling source file 'Scenes.cpp')
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\dinput.h(48,1):
-  see previous definition of 'DIRECTINPUT_VERSION'
-  
-  Sprite.cpp
-  Sprites.cpp
-  Textures.cpp
-  main.cpp
-  Generating Code...
+C:\Users\qdo20\source\repos\Contra\ContraNES\PlayScene.cpp(229,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   ContraNES.vcxproj -> C:\Users\qdo20\source\repos\Contra\ContraNES\x64\Debug\ContraNES.exe

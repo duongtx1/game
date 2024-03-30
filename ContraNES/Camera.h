@@ -1,6 +1,8 @@
 #pragma once
 #include <Windows.h>
 
+#include "Player.h"
+#include "Game.h"
 class Camera
 {
 	static Camera* instance;
@@ -11,20 +13,22 @@ class Camera
 	int width;
 	int height;
 
-	float vx = 0.2f;
-	float vy = 0.2f;
-
+	int mapWidth, mapHeight;
+	bool isVertical;
 public:
 
-	void Init(int w, int h);
+	void Init(int w, int h, int mw, int mh, bool isVertical);
 	void setPosCamera(float x, float y);
+	D3DXVECTOR2 getCamPosition();
 
-	float getX() { return camx; }
-	float getY() { return camy; }
+
+	// TODO: cai nay o trong class Map
+	float getMapWidth() { return mapWidth; }
+	float getMapHeight() { return mapHeight; }
 	int getWidth() { return width; }
 	int getHeight() { return height; }
 
-	void Update(DWORD dt);
+	void Update(DWORD dt, CPlayer* c);
 
 	static Camera* GetInstance();
 

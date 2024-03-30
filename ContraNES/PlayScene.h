@@ -18,7 +18,7 @@ protected:
 	void _ParseSection_ANIMATIONS(string line);
 	void _ParseSection_MAP(string line);
 
-	void _ParseSectionAnimations(string line);
+	void _ParseSectionObjects(string line);
 	void _ParseSectionSprites(string line);
 
 	void LoadAssets(LPCWSTR assetFile);
@@ -33,6 +33,13 @@ public:
 
 	LPGAMEOBJECT GetPlayer() { return player; }
 
+	float getMapWidth() { return map->getMapWidth(); }
+	float getMapHeight() { return map->getMapHeight(); }
+
+
+	void Add(LPGAMEOBJECT ob) {
+		objects.push_back(ob);
+	}
 	void Clear();
 	void PurgeDeletedObjects();
 

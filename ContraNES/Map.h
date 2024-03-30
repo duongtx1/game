@@ -22,6 +22,7 @@ class CMap {
 
 	int offsetW, offsetH;	// number of tile need to render
 	int width, height;
+	int isVertical = -1;
 
 	void _LoadMapTiles();
 	void _ParseSection_MapTile(string line);
@@ -34,4 +35,5 @@ public:
 	int getMapHeight() { return height; }
 	void Load(wstring path);
 	void Render();
+	bool IsVertical();
 };

@@ -63,6 +63,12 @@
     <ClCompile Include="Scenes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -131,6 +137,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scenes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

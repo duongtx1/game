@@ -330,92 +330,75 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 #define GAME_FILE_SECTION_SPRITES 4
 #define GAME_FILE_SECTION_ANIMATIONS 5
 
-//void CGame::_ParseSection_SETTINGS(string line)
-//{
-//	vector<string> tokens = split(line);
-//
-//	if (tokens.size() < 2) return;
-//	if (tokens[0] == "start")
-//		next_scene = atoi(tokens[1].c_str());
-//	else
-//		DebugOut(L"[ERROR] Unknown game setting: %s\n", ToWSTR(tokens[0]).c_str());
-//}
-//
-//void CGame::_ParseSection_SCENES(string line)
-//{
-//	vector<string> tokens = split(line);
-//
-//	if (tokens.size() < 2) return;
-//	int id = atoi(tokens[0].c_str());
-//	LPCWSTR path = ToLPCWSTR(tokens[1]);   // file: ASCII format (single-byte char) => Wide Char
-//
-//	LPSCENE scene = new CPlayScene(id, path);
-//	scenes[id] = scene;
-//}
 
-/*
-	Load game campaign file and load/initiate first scene
-*/
-//void CGame::Load(LPCWSTR gameFile)
-//{
-//	DebugOut(L"[INFO] Start loading game file : %s\n", gameFile);
-//
-//	ifstream f;
-//	f.open(gameFile);
-//	char str[MAX_GAME_LINE];
-//
-//	// current resource section flag
-//	int section = GAME_FILE_SECTION_UNKNOWN;
-//
-//	while (f.getline(str, MAX_GAME_LINE))
-//	{
-//		string line(str);
-//
-//		if (line[0] == '#') continue;	// skip comment lines	
-//
-//		if (line == "[SETTINGS]") { section = GAME_FILE_SECTION_SETTINGS; continue; }
-//		if (line == "[TEXTURES]") { section = GAME_FILE_SECTION_TEXTURES; continue; }
-//		if (line == "[SCENES]") { section = GAME_FILE_SECTION_SCENES; continue; }
-//		if (line[0] == '[')
-//		{
-//			section = GAME_FILE_SECTION_UNKNOWN;
-//			DebugOut(L"[ERROR] Unknown section: %s\n", ToLPCWSTR(line));
-//			continue;
-//		}
-//
-//		//
-//		// data section
-//		//
-//		switch (section)
-//		{
-//		case GAME_FILE_SECTION_SETTINGS: _ParseSection_SETTINGS(line); break;
-//		case GAME_FILE_SECTION_SCENES: _ParseSection_SCENES(line); break;
-//		case GAME_FILE_SECTION_TEXTURES: _ParseSection_TEXTURES(line); break;
-//		}
-//	}
-//	f.close();
-//
-//	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
-//
-//	//SwitchScene();
-//}
+CGame::~CGame()
+{
+	pBlendStateAlpha->Release();
+	spriteObject->Release();
+	pRenderTargetView->Release();
+	pSwapChain->Release();
+	pD3DDevice->Release();
+}
 
-//void CGame::SwitchScene()
-//{
-//	if (next_scene < 0 || next_scene == current_scene) return;
-//
-//	DebugOut(L"[INFO] Switching to scene %d\n", next_scene);
-//
-//	scenes[current_scene]->Unload();
-//
-//	CSprites::GetInstance()->Clear();
-//	CAnimations::GetInstance()->Clear();
-//
-//	current_scene = next_scene;
-//	LPSCENE s = scenes[next_scene];
-//	this->SetKeyHandler(s->GetKeyEventHandler());
-//	s->Load();
-//}
+CGame* CGame::GetInstance()
+{
+	if (__instance == NULL) __instance = new CGame();
+	return __instance;
+}
+
+void CGame::Update(DWORD dt) {
+	scenes->SwitchScene();
+	scenes->GetCurrentScene()->Update(dt);
+	Keyboard::GetInstance()->ProcessKeyboard();
+}
+
+void CGame::Render() {
+	scenes->GetCurrentScene()->Render();
+}
+
+void CGame::Load(LPCWSTR gameFile) {
+	DebugOut(L"[INFO] Start loading game file : %s\n", gameFile);
+
+	ifstream f;
+	f.open(gameFile);
+	char str[MAX_GAME_LINE];
+
+	// current resource section flag
+	int section = GAME_FILE_SECTION_UNKNOWN;
+
+	while (f.getline(str, MAX_GAME_LINE))
+	{
+		string line(str);
+
+		if (line[0] == '#') continue;	// skip comment lines	
+
+		if (line == "[SETTINGS]") { section = GAME_FILE_SECTION_SETTINGS; continue; }
+		if (line == "[Textures]") { section = GAME_FILE_SECTION_TEXTURES; continue; }
+		if (line == "[Sprites]") { section = GAME_FILE_SECTION_SPRITES; continue; }
+		if (line == "[Animations]") { section = GAME_FILE_SECTION_ANIMATIONS; continue; }
+
+		if (line == "[SCENES]") { section = GAME_FILE_SECTION_SCENES; continue; }
+		if (line[0] == '[')
+		{
+			section = GAME_FILE_SECTION_UNKNOWN;
+			DebugOut(L"[ERROR] Unknown section: %s\n", ToLPCWSTR(line));
+			continue;
+		}
+
+		//
+		// data section
+		//
+		switch (section)
+		{
+		case GAME_FILE_SECTION_TEXTURES: _ParseSection_TEXTURES(line); break;
+		case GAME_FILE_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
+		case GAME_FILE_SECTION_SPRITES: _ParseSection_SPRITES(line); break;
+		}
+	}
+	f.close();
+
+	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
+}
 
 
 void CGame::_ParseSection_TEXTURES(string line)
@@ -468,102 +451,4 @@ void CGame::_ParseSection_SPRITES(string line)
 	LPTEXTURE tex = CTextures::GetInstance()->Get(texId);
 
 	CSprites::GetInstance()->Add(spriteID, l, t, r, b, tex);
-}
-
-
-CGame::~CGame()
-{
-	pBlendStateAlpha->Release();
-	spriteObject->Release();
-	pRenderTargetView->Release();
-	pSwapChain->Release();
-	pD3DDevice->Release();
-}
-
-CGame* CGame::GetInstance()
-{
-	if (__instance == NULL) __instance = new CGame();
-	return __instance;
-}
-
-void CGame::Update(DWORD dt) {
-	scenes->SwitchScene();
-	scenes->GetCurrentScene()->Update(dt);
-	Keyboard::GetInstance()->ProcessKeyboard();
-
-	//player->Update(dt);
-	//// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
-	//if (player == NULL) return;
-
-	//// Update camera to follow mario
-	//float cx, cy;
-	//player->GetPosition(cx, cy);
-	//float cc;
-	//cc = cx;
-
-	//CGame* game = CGame::GetInstance();
-	//cx -= game->GetBackBufferWidth() / 2;
-	//cy -= game->GetBackBufferHeight() / 2;
-
-	//if (cx < 0) cx = 0;
-	//if (cx > map->getMapWidth() - game->GetBackBufferWidth()) { //3328 305
-	//	cx = map->getMapWidth() - game->GetBackBufferWidth();
-	//	//cx = 3008;
-	//}
-
-	//// TODO: fix this temp solution
-	//// Neu map vertical => di chuyen cy 
-	//cy = -8;
-
-	//CGame::GetInstance()->SetCamPos(cx, cy);
-	//DebugOutTitle(L"%0.2f\t   %0.2f\t\n", cx, cy);
-}
-void CGame::Render() {
-	scenes->GetCurrentScene()->Render();
-}
-void CGame::Load(LPCWSTR gameFile) {
-	DebugOut(L"[INFO] Start loading game file : %s\n", gameFile);
-
-	ifstream f;
-	f.open(gameFile);
-	char str[MAX_GAME_LINE];
-
-	// current resource section flag
-	int section = GAME_FILE_SECTION_UNKNOWN;
-
-	while (f.getline(str, MAX_GAME_LINE))
-	{
-		string line(str);
-
-		if (line[0] == '#') continue;	// skip comment lines	
-
-		if (line == "[SETTINGS]") { section = GAME_FILE_SECTION_SETTINGS; continue; }
-		if (line == "[Textures]") { section = GAME_FILE_SECTION_TEXTURES; continue; }
-		if (line == "[Sprites]") { section = GAME_FILE_SECTION_SPRITES; continue; }
-		if (line == "[Animations]") { section = GAME_FILE_SECTION_ANIMATIONS; continue; }
-
-		if (line == "[SCENES]") { section = GAME_FILE_SECTION_SCENES; continue; }
-		if (line[0] == '[')
-		{
-			section = GAME_FILE_SECTION_UNKNOWN;
-			DebugOut(L"[ERROR] Unknown section: %s\n", ToLPCWSTR(line));
-			continue;
-		}
-
-		//
-		// data section
-		//
-		switch (section)
-		{
-		case GAME_FILE_SECTION_TEXTURES: _ParseSection_TEXTURES(line); break;
-		case GAME_FILE_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
-		case GAME_FILE_SECTION_SPRITES: _ParseSection_SPRITES(line); break;
-
-			//case GAME_FILE_SECTION_SETTINGS: _ParseSection_SETTINGS(line); break;
-			//case GAME_FILE_SECTION_SCENES: _ParseSection_SCENES(line); break;
-		}
-	}
-	f.close();
-
-	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
 }

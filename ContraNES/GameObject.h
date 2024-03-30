@@ -5,47 +5,56 @@
 
 #include "Texture.h"
 #include "Sprite.h"
+#include "Collision.h"
+
+#define ID_TEX_BBOX -100		// special texture to draw object bounding box
+#define BBOX_ALPHA 0.25f		// Bounding box transparency
 
 class CGameObject
 {
 protected:
-	float x;
-	float y;
+	float x, y;
+	float vx, vy;
+
 	int nx;
 	int state;
 
-	// This should be a pointer to an object containing all graphic/sound/audio assets for rendering this object. 
-	// For now, just a pointer to a single texture
-	LPTEXTURE texture;
+	bool isDeleted;
 public:
+	CGameObject();
+	CGameObject(float x, float y) :CGameObject() { this->x = x; this->y = y; this->vx = 0; this->vy = 0; }
+
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
-	float GetX() { return x; }
-	float GetY() { return y; }
+	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
+	void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
+	void GetSpeed(float& vx, float& vy) {
+		vx = this->vx; vy = this->vy;
+	}
 
-	CGameObject(float x = 0.0f, float y = 0.0f, LPTEXTURE texture = NULL);
-
-	virtual void Update(DWORD dt) = 0;
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* gameObject = NULL) {}
 	virtual void Render() = 0;
+
+	bool IsDeleted() { return isDeleted; }
+
+	void RenderBoundingBox();
+
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) = 0;
 
 	void SetState(int state) { this->state = state; }
 	int GetState() { return this->state; }
 
+	//
+	// Collision ON or OFF ? This can change depending on object's state. For example: die
+	//
+	virtual int IsCollidable() { return 0; };
+
+	// When no collision has been detected (triggered by CCollision::Process)
+	virtual void OnNoCollision(DWORD dt) {};
+
+	// When collision with an object has been detected (triggered by CCollision::Process)
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e, DWORD dt = 0) {};
+	virtual int IsBlocking() { return 0; };
+
 	~CGameObject();
 };
 typedef CGameObject* LPGAMEOBJECT;
-
-#define ID_ANI_BRICK 10000
-#define BRICK_WIDTH 16
-#define BRICK_BBOX_WIDTH 16
-#define BRICK_BBOX_HEIGHT 16
-
-class CBrick : public CGameObject {
-	LPSPRITE sprite;
-public:
-	CBrick(float x, float y, LPTEXTURE tex) : CGameObject(x, y, tex) {
-		sprite = new CSprite(0, 0, 16, 16, texture);
-	}
-	void Render();
-	void Update(DWORD dt) {}
-	void GetBoundingBox(float& l, float& t, float& r, float& b);
-};

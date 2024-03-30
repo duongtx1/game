@@ -38,20 +38,19 @@
 
 #define BILL_STATE_UP	1000
 #define BILL_STATE_UP_RELEASE 1001	
+
+#define CONTRA_START_VY 0.0f
+
 class CPlayer : public CGameObject, public KeyEventHandler
 {
-	float vx;
-	float vy;
-	LPSPRITE sprite = NULL;
+	int isOnGround = 0;
 public:
-	CPlayer() { x = y = 0; vx = vy = 0; }
-	CPlayer(float x, float y, float vx, float vy, LPTEXTURE texture) :CGameObject(x, y, texture)
+	CPlayer(float x, float y, float vx, float vy) :CGameObject(x, y)
 	{
-		sprite = new CSprite(0, 0, 25, 34, texture);
 		this->vx = vx;
 		this->vy = vy;
 	};
-	void Update(DWORD dt);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* gameObject = NULL);
 	void Render();
 
 	void KeyState(BYTE* state);
@@ -62,4 +61,7 @@ public:
 		vx = 0;
 	}
 	void SetState(int state);
+	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	void OnCollisionWith(LPCOLLISIONEVENT e, DWORD dt);
+	int IsCollidable() { return 1; }
 };

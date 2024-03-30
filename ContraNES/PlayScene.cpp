@@ -3,6 +3,8 @@
 #include "PlayScene.h"
 #include "Textures.h"
 #include "Sprites.h"
+#include "BlockObject.h"
+#include "Camera.h"
 
 
 using namespace std;
@@ -48,7 +50,7 @@ void CPlayScene::_ParseSection_SPRITES(string line)
 	CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
 }
 
-void CPlayScene::_ParseSectionAnimations(string line)
+void CPlayScene::_ParseSectionObjects(string line)
 {
 	vector<string> tokens = split(line);
 
@@ -84,11 +86,16 @@ void CPlayScene::_ParseSection_MAP(string line)
 {
 	LPCWSTR path = ToLPCWSTR(line.c_str());
 	map = new CMap(path);
+
+	int mw = map->getMapWidth();
+	int mh = map->getMapHeight();
+	bool isVertical = map->IsVertical();
+	int w = CGame::GetInstance()->GetBackBufferWidth();
+	int h = CGame::GetInstance()->GetBackBufferHeight();
+
+	Camera::GetInstance()->Init(w, h, mw, mh, isVertical);
 }
 
-/*
-	Parse a line in section [OBJECTS]
-*/
 void CPlayScene::_ParseSectionSprites(string line)
 {
 	vector<string> tokens = split(line);
@@ -188,8 +195,13 @@ void CPlayScene::Load()
 	CTextures* textures = CTextures::GetInstance();
 	CTexture* texPlayer = textures->Get(0);
 
-	player = new CPlayer(100, 200, 0.0f, CONTRA_START_VY, texPlayer);
+	player = new CPlayer(2500, 1900, 0.0f, CONTRA_START_VY);
 	key_handler = player;
+
+	CBlockObject* block;
+	for (int i = 0; i < 20; i++) {
+		objects.push_back(new CBlockObject(i * 16, 80, 10));
+	}
 
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
 }
@@ -205,37 +217,17 @@ void CPlayScene::Update(DWORD dt)
 		coObjects.push_back(objects[i]);
 	}
 
-	/*for (size_t i = 0; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);
-	}*/
-
-	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
-	if (player == NULL) return;
-
-	player->Update(dt);
-	// Update camera to follow mario
-	float cx, cy;
-	player->GetPosition(cx, cy);
-	float cc;
-	cc = cx;
-
-	CGame* game = CGame::GetInstance();
-	cx -= game->GetBackBufferWidth() / 2;
-	cy -= game->GetBackBufferHeight() / 2;
-
-	if (cx < 0) cx = 0;
-	if (cx > map->getMapWidth() - game->GetBackBufferWidth()) { //3328 305
-		cx = map->getMapWidth() - game->GetBackBufferWidth();
-		//cx = 3008;
 	}
 
-	// TODO: fix this temp solution
-	// Neu map vertical => di chuyen cy 
-	//cy = -8;
+	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)a
+	if (player == NULL) return;
 
-	CGame::GetInstance()->SetCamPos(cx, cy);
-	DebugOutTitle(L"%0.2f\t   %0.2f\t\n", cx, cy);
+	player->Update(dt, &objects);
+	// Update camera to follow mario
+	Camera::GetInstance()->Update(dt, player);
 
 	PurgeDeletedObjects();
 }
@@ -287,11 +279,11 @@ void CPlayScene::PurgeDeletedObjects()
 	for (it = objects.begin(); it != objects.end(); it++)
 	{
 		LPGAMEOBJECT o = *it;
-		/*if (o->IsDeleted())
+		if (o->IsDeleted())
 		{
 			delete o;
 			*it = NULL;
-		}*/
+		}
 	}
 
 	// NOTE: remove_if will swap all deleted items to the end of the vector
@@ -301,11 +293,12 @@ void CPlayScene::PurgeDeletedObjects()
 		objects.end());
 }
 
-
-
 void CPlayScene::OnKeyDown(int KeyCode) {
 	if (KeyCode == DIK_3) {
 		CScenes::GetInstance()->InitiateSwitchScene(2);
+	}
+	else if (KeyCode == DIK_1) {
+		CScenes::GetInstance()->InitiateSwitchScene(1);
 	}
 	return;
 }

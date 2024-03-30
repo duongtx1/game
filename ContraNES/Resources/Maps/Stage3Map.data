@@ -1,7 +1,7 @@
 #	0:	Info	|	1:	Map
 #	[numRows	|	numColumns	|	numTileRows	|	numTileColumns	|	tileSize	|	TextureID	|	//gridSize]
 [Info]
-136	16	13	11	16	40
+136	16	13	11	16	40	1
 [Map]
 1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1
 1	1	1	1	1	1	2	3	4	5	1	1	1	1	1	1

@@ -1,47 +1,66 @@
 #include "Player.h"
 #include "Game.h"
 #include "debug.h"
+#include "PlayScene.h"
+#include "BlockObject.h"
+#include "Camera.h"
 
 #define CONTRA_VX 0.1f
 #define CONTRA_WIDTH 14
 
 #define GROUND_Y 100
 
-void CPlayer::Update(DWORD dt)
+void CPlayer::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	x += vx * dt;
-	//y += vy * dt;
+	y += vy * dt;
 	//vy += BILL_GRAVITY * dt;
 
 	/*if (y > GROUND_Y) {
 		vy = 0;
 		y = GROUND_Y;
 	}*/
-	DebugOut(L"%0.2f\t\t%0.2f\t\n", x, y);
-	int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
-	if (x <= 0 || x >= 4000 - CONTRA_WIDTH) {
+	//DebugOut(L"%0.2f\t\t%0.2f\t\n", x, y);
+
+	int mapWidth = Camera::GetInstance()->getMapWidth();
+	if (x <= 0 || x >= mapWidth - CONTRA_WIDTH) {
 		vx = -vx;
 		if (x <= 0)
 		{
 			x = 0;
 		}
-		else if (x >= BackBufferWidth - CONTRA_WIDTH)
+		else if (x >= mapWidth - CONTRA_WIDTH)
 		{
-			x = (float)(BackBufferWidth - CONTRA_WIDTH);
+			x = (float)(mapWidth - CONTRA_WIDTH);
 		}
 	}
+	int mapHeight = Camera::GetInstance()->getMapHeight();
+	if (y <= 0 || y >= mapHeight - 35) {
+		vy = -0;
+		if (x <= 0)
+		{
+			x = 0;
+		}
+		/*else if (x >= mapHeight - CONTRA_WIDTH)
+		{
+			x = (float)(mapHeight - CONTRA_WIDTH);
+		}*/
+	}
+	isOnGround = 0;
+
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
 void CPlayer::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;
-	if (y < GROUND_Y) {
+	if (!isOnGround) {
 		if (nx >= 0) {
-			aniId = ID_ANI_JUMPING_RIGHT;
+			aniId = ID_ANI_BILL_IDLE_RIGHT;
 		}
 		else {
-			aniId = ID_ANI_JUMPING_LEFT;
+			aniId = ID_ANI_BILL_IDLE_RIGHT;
 		}
 	}
 	else
@@ -83,6 +102,7 @@ void CPlayer::Render()
 	}
 
 	animations->Get(aniId)->Render(x, y);
+	RenderBoundingBox();
 }
 
 void CPlayer::KeyState(BYTE* state)
@@ -120,17 +140,17 @@ void CPlayer::OnKeyDown(int KeyCode)
 	{
 	case DIK_SPACE:
 		SetState(BILL_STATE_JUMP); break;
-
 	case DIK_S:
 		SetState(BILL_STATE_LIE); break;
-
 	case DIK_W:
 		SetState(BILL_STATE_UP); break;
 	case DIK_3:
 		CScenes::GetInstance()->InitiateSwitchScene(2); break;
+	case DIK_1:
+		CScenes::GetInstance()->InitiateSwitchScene(1); break;
 	}
-
 }
+
 
 void CPlayer::OnKeyUp(int KeyCode)
 {
@@ -160,7 +180,7 @@ void CPlayer::SetState(int state) {
 		break;
 	case BILL_STATE_JUMP:
 		if (IsKeyDown(DIK_S)) break;
-		if (y == GROUND_Y) {
+		if (isOnGround) {
 			vy = -BILL_JUMP_SPEED;
 		}
 		break;
@@ -169,7 +189,7 @@ void CPlayer::SetState(int state) {
 			break;*/
 	case BILL_STATE_LIE:
 		if (y == GROUND_Y) {
-			state = BILL_STATE_IDLE;
+			state = BILL_STATE_LIE;
 			//isLying = true;
 			vx = 0; vy = 0;
 		}
@@ -194,4 +214,70 @@ void CPlayer::SetState(int state) {
 		break;
 	}
 	CGameObject::SetState(state);
+}
+
+void CPlayer::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	left = x;
+	top = y;
+	if (state == BILL_STATE_IDLE)
+	{
+		right = x + 24;
+		bottom = y - 36;
+		return;
+	}
+	if (state == BILL_STATE_LIE)
+	{
+		right = x + 33;
+		bottom = y - 18;
+		return;
+	}
+	/*if (state == BILL_STATE_SWIM || state == BILL_STATE_SWIM_MOVE)
+	{
+		right = x + 17;
+		bottom = top - 25;
+		return;
+	}
+	if (state == BILL_STATE_DEAD)
+	{
+		right = x + 21;
+		bottom = y - 12;
+		return;
+	}*/
+	right = x + 24;
+	bottom = y - 36;
+}
+
+void CPlayer::OnCollisionWith(LPCOLLISIONEVENT e, DWORD dt)
+{
+	if (dynamic_cast<CBlockObject*>(e->obj))
+	{
+		if (e->ny > 0)
+		{
+			vy = 0;
+			if (state == BILL_STATE_JUMP)
+				SetState(BILL_STATE_IDLE);
+
+		}
+		else if (e->ny < 0)
+		{
+			vy = 0;
+			isOnGround = 1;
+		}
+	}
+	else
+	{
+		if (e->ny > 0 && e->obj->IsBlocking())
+		{
+			vy = 0;
+			if (state == BILL_STATE_JUMP)
+				SetState(BILL_STATE_IDLE);
+
+		}
+		if (e->ny <= 0 && e->obj->IsBlocking())
+		{
+			vy = 0;
+		}
+
+	}
 }

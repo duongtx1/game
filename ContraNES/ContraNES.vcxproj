@@ -131,6 +131,8 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="BlockObject.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -161,6 +163,8 @@
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="Animations.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="BlockObject.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />

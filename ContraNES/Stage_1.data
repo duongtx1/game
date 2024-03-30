@@ -4,6 +4,9 @@
 0	Contra_Sprites.png
 30	./Resources/Maps/ContraMapStage1TileSheet.png
 40	./Resources/Maps/ContraMapStage3TileSheet.png
+50	./Resources/Textures/Bullets.png
+-100	./Resources/Textures/bbox.png
+
 [Sprites]
 10001	25	24	44	59	0
 10002	90	27	110	58	0

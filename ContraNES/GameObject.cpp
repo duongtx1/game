@@ -3,36 +3,39 @@
 #include "debug.h"
 #include "Game.h"
 #include "GameObject.h"
+#include "Camera.h"
 
-/*
-	Initialize game object
-*/
-CGameObject::CGameObject(float x, float y, LPTEXTURE tex)
+
+CGameObject::CGameObject()
 {
-	this->x = x;
-	this->y = y;
-	this->texture = tex;
+	x = y = 0;
+	vx = vy = 0;
+	nx = 1;
+	state = -1;
+	isDeleted = false;
 }
 
-void CGameObject::Render()
+void CGameObject::RenderBoundingBox()
 {
-	CGame::GetInstance()->Draw(x, y, texture);
+	D3DXVECTOR3 p(x, y, 0);
+	RECT rect;
+
+	LPTEXTURE bbox = CTextures::GetInstance()->Get(ID_TEX_BBOX);
+
+	float l, t, r, b;
+
+	GetBoundingBox(l, t, r, b);
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = (int)r - (int)l;
+	rect.bottom = (int)b - (int)t;
+
+	D3DXVECTOR2 pos = Camera::GetInstance()->getCamPosition();
+
+	CGame::GetInstance()->Draw(x - pos.x, y - pos.y, bbox, &rect, BBOX_ALPHA);
 }
 
 CGameObject::~CGameObject()
 {
-	if (texture != NULL) delete texture;
-}
 
-void CBrick::Render()
-{
-	sprite->Draw(x, y);
-}
-
-void CBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
-{
-	l = x - BRICK_BBOX_WIDTH / 2;
-	t = y - BRICK_BBOX_HEIGHT / 2;
-	r = l + BRICK_BBOX_WIDTH;
-	b = t + BRICK_BBOX_HEIGHT;
 }

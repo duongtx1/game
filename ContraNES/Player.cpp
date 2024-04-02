@@ -125,10 +125,10 @@ void CPlayer::KeyState(BYTE* state)
 		SetState(BILL_STATE_UP);
 	}
 	else if (IsKeyDown(DIK_UPARROW)) {
-		y--;
+		y -= 10;
 	}
 	else if (IsKeyDown(DIK_DOWNARROW)) {
-		y++;
+		y += 10;
 	}
 	else
 		Stop();

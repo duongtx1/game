@@ -11,23 +11,6 @@ C:\Users\qdo20\source\repos\Contra\ContraNES\Camera.h(26,31): warning C4244: 're
 C:\Users\qdo20\source\repos\Contra\ContraNES\Camera.h(27,32): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Camera.cpp')
   
-C:\Users\qdo20\source\repos\Contra\ContraNES\Camera.cpp(40,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\qdo20\source\repos\Contra\ContraNES\Camera.cpp(48,28): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  PlayScene.cpp
-C:\Users\qdo20\source\repos\Contra\ContraNES\PlayScene.h(36,47): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'PlayScene.cpp')
-  
-C:\Users\qdo20\source\repos\Contra\ContraNES\PlayScene.h(37,49): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'PlayScene.cpp')
-  
-C:\Users\qdo20\source\repos\Contra\ContraNES\Camera.h(26,31): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'PlayScene.cpp')
-  
-C:\Users\qdo20\source\repos\Contra\ContraNES\Camera.h(27,32): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'PlayScene.cpp')
-  
-C:\Users\qdo20\source\repos\Contra\ContraNES\PlayScene.cpp(116,2): warning C4060: switch statement contains no 'case' or 'default' labels
-C:\Users\qdo20\source\repos\Contra\ContraNES\PlayScene.cpp(203,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\qdo20\source\repos\Contra\ContraNES\PlayScene.cpp(201,16): warning C4101: 'block': unreferenced local variable
-  Generating Code...
+C:\Users\qdo20\source\repos\Contra\ContraNES\Camera.cpp(41,30): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\qdo20\source\repos\Contra\ContraNES\Camera.cpp(50,28): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   ContraNES.vcxproj -> C:\Users\qdo20\source\repos\Contra\ContraNES\x64\Debug\ContraNES.exe

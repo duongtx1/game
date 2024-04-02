@@ -31,14 +31,16 @@ void Camera::Update(DWORD dt, CPlayer* c)
 
 	if (isVertical) {
 
+		//camx = -10;
 		camy = cy - game->GetBackBufferHeight() / 2;
 		if (camy < 0)
 		{
 			camy = 0;
 		}
-		if (cy > mapHeight - height) {
-			camy = mapHeight - height;
+		if (camy > mapHeight - height - 6) {
+			camy = mapHeight - height - 6;
 		}
+		DebugOut(L"%0.2f\n", camy);
 	}
 	else {
 		camx = cx - game->GetBackBufferWidth() / 2;
@@ -47,9 +49,9 @@ void Camera::Update(DWORD dt, CPlayer* c)
 		if (camx > mapWidth - width - 12) {
 			camx = mapWidth - width - 12;
 		}
+		DebugOut(L"%0.2f\t", camx);
 	}
 
-	DebugOut(L"%0.2f\t", camx);
 }
 
 D3DXVECTOR2 Camera::getCamPosition() {
